@@ -5,3 +5,4 @@ include
 lib
 bin
 .vscode/tasks.json
+src/build/Debug/main.o
