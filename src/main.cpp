@@ -3,9 +3,31 @@
 
 using namespace std;
 
-int main(int argc, char * argv[]){
-    SDL_Init(SDL_INIT_EVERYTHING);
-    SDL_Window *window = SDL_CreateWindow("title", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_SHOWN);
+int main(int argc, char *argv[]){
+    int init = SDL_Init(SDL_INIT_EVERYTHING);
+    if (init < 0){
+        cerr << "SDL not initialized properly error code :" << init << endl;
+        return init;
+    };
+
+    SDL_Window *window = SDL_CreateWindow("Raycast", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_SHOWN);
+    
+    if (window == nullptr){
+        cerr << "Failed to create window" << endl;
+        return -1;
+    }
+    
+    SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED); 
+
+    if (renderer == nullptr){
+        cerr << "Failed to create renderer" << endl;
+        return -2;
+    }
+
+    SDL_Delay(3000);
+
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
     SDL_Quit();
     return 0;
 }
