@@ -29,6 +29,7 @@ int main(int argc, char *argv[]){
     SDL_Event events;
 
     while(running){
+        //Events input
         while (SDL_PollEvent(&events)){
             switch (events.type){
                 case SDL_QUIT:
@@ -36,6 +37,20 @@ int main(int argc, char *argv[]){
                     break;
             }
         }
+
+        //Update
+
+        //Draw
+        SDL_Rect rectangle = {0, 0, 400, 200};
+
+        SDL_SetRenderDrawColor(renderer, 0,0,0,255);
+        SDL_RenderClear(renderer); //not really clearing, more like filling
+        
+        SDL_SetRenderDrawColor(renderer, 0,20,255,255);
+        SDL_RenderFillRect(renderer, &rectangle);
+
+        SDL_RenderPresent(renderer);
+
     }
 
     SDL_DestroyRenderer(renderer);
