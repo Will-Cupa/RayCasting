@@ -23,8 +23,20 @@ int main(int argc, char *argv[]){
         cerr << "Failed to create renderer" << endl;
         return -2;
     }
+    
+    bool running = true;
 
-    SDL_Delay(3000);
+    SDL_Event events;
+
+    while(running){
+        while (SDL_PollEvent(&events)){
+            switch (events.type){
+                case SDL_QUIT:
+                    running = false;
+                    break;
+            }
+        }
+    }
 
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
