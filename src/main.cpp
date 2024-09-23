@@ -1,7 +1,9 @@
+#include "SDL2/SDL.h"
 #include <iostream>
 
+using namespace std;
+
 int main(){
-    
-    std::cout << "hello world" << std::endl;
+    cout << "hello\n";
     return 0;
 }
