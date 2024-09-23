@@ -3,6 +3,8 @@
 
 using namespace std;
 
+void drawMaze(SDL_Renderer *renderer, int wallSize);
+
 int main(int argc, char *argv[]){
     int init = SDL_Init(SDL_INIT_EVERYTHING);
     if (init < 0){
@@ -43,11 +45,13 @@ int main(int argc, char *argv[]){
         //Draw
         SDL_Rect rectangle = {0, 0, 400, 200};
 
-        SDL_SetRenderDrawColor(renderer, 0,0,0,255);
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer); //not really clearing, more like filling
         
         SDL_SetRenderDrawColor(renderer, 0,20,255,255);
-        SDL_RenderFillRect(renderer, &rectangle);
+        drawMaze(renderer,40);
+        
+        //SDL_RenderFillRect(renderer, &rectangle);
 
         SDL_RenderPresent(renderer);
 
@@ -59,6 +63,29 @@ int main(int argc, char *argv[]){
     return 0;
 }
 
+
+void drawMaze(SDL_Renderer *renderer, int wallSize){
+    string maze = "XXXX\n000X\nXXXX\n";
+    SDL_Rect wall;
+    int pos_x = 0;
+    int pos_y = 0;
+    int j = 0;
+
+    for(int i = 0; i < maze.length(); i++){
+        if(maze[i] == '\n'){
+            pos_y += wallSize;
+            pos_x = 0;
+        } else {
+            if(maze[i] == 'X'){
+                wall = {pos_x, pos_y, wallSize, wallSize};
+                SDL_RenderFillRect(renderer, &wall);
+            } 
+            
+            pos_x += wallSize;
+        }   
+    }
+
+}
 
 //to compile
 //g++ main.cpp -ID:\C++Libraries\SDL2\include -LD:\C++Libraries\SDL2\lib -lmingw32 -lSDL2main -lSDL2 -o main
