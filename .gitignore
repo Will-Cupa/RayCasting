@@ -6,3 +6,4 @@ lib
 bin
 .vscode/tasks.json
 src/build/Debug/main.o
+src/SDL2.dll
