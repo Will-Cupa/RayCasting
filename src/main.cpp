@@ -10,12 +10,12 @@ string readFile(ifstream &file);
 
 int main(int argc, char *argv[]){
     int init = SDL_Init(SDL_INIT_EVERYTHING);
-    if (init <  ){
+    if (init < 0){
         cerr << "SDL not initialized properly error code :" << init << endl;
         return init;
     };
 
-    SDL_Window *window = SDL_CreateWindow("Raycast", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 8  , 6  , SDL_WINDOW_SHOWN);
+    SDL_Window *window = SDL_CreateWindow("Raycast", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_SHOWN);
     
     if (window == nullptr){
         cerr << "Failed to create window" << endl;
@@ -50,13 +50,13 @@ int main(int argc, char *argv[]){
         //Update
 
         //Draw
-        SDL_Rect rectangle = { ,  , 4  , 2  };
+        SDL_Rect rectangle = {0, 0, 400, 200};
 
-        SDL_SetRenderDrawColor(renderer,  ,  ,  , 255);
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer); //not really clearing, more like filling
         
-        SDL_SetRenderDrawColor(renderer,  ,2 ,255,255);
-        drawMaze(renderer, maze, 4 , 3 , 5 );
+        SDL_SetRenderDrawColor(renderer, 0,20,255,255);
+        drawMaze(renderer, maze, 40, 30, 50);
         
         //SDL_RenderFillRect(renderer, &rectangle);
 
@@ -67,7 +67,7 @@ int main(int argc, char *argv[]){
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
-    return  ;
+    return 0;
 }
 
 string readFile(ifstream &file){
@@ -83,13 +83,12 @@ string readFile(ifstream &file){
 
 
 void drawMaze(SDL_Renderer *renderer, const string& maze, int wallSize, int pos_x, int pos_y){
-    //string maze = "XXXX\n   X\nXXXX\n";
     SDL_Rect wall;
     int x = pos_x;
     int y = pos_y;
-    int j =  ;
+    int j = 0;
 
-    for(int i =  ; i < maze.length(); i++){
+    for(int i = 0; i < maze.length(); i++){
         if(maze[i] == '\n'){
             y += wallSize;
             x = pos_x;
