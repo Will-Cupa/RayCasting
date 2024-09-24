@@ -4,6 +4,9 @@
 
 using namespace std;
 
+int px = 0;
+int py = 0;
+
 void drawMaze(SDL_Renderer *renderer, const string &maze, int wallSize, int x, int y);
 
 string readFile(ifstream &file);
@@ -50,7 +53,7 @@ int main(int argc, char *argv[]){
         //Update
 
         //Draw
-        SDL_Rect rectangle = {0, 0, 400, 200};
+        SDL_Rect rectangle = {px - 10, py - 10, 20, 20};
 
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer); //not really clearing, more like filling
@@ -58,7 +61,8 @@ int main(int argc, char *argv[]){
         SDL_SetRenderDrawColor(renderer, 0,20,255,255);
         drawMaze(renderer, maze, 40, 30, 50);
         
-        //SDL_RenderFillRect(renderer, &rectangle);
+        SDL_SetRenderDrawColor(renderer, 0,240,255,255);
+        SDL_RenderFillRect(renderer, &rectangle);
 
         SDL_RenderPresent(renderer);
 
@@ -80,7 +84,6 @@ string readFile(ifstream &file){
 
     return output;
 }
-
 
 void drawMaze(SDL_Renderer *renderer, const string& maze, int wallSize, int pos_x, int pos_y){
     SDL_Rect wall;
