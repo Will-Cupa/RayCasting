@@ -1,15 +1,11 @@
 #include <SDL2/SDL.h>
 #include <iostream>
-#include <fstream>
+#include "maze.h"
 
 using namespace std;
 
 int px = 0;
 int py = 0;
-
-void drawMaze(SDL_Renderer *renderer, const string &maze, int wallSize, int x, int y);
-
-string readFile(ifstream &file);
 
 int main(int argc, char *argv[]){
     int init = SDL_Init(SDL_INIT_EVERYTHING);
@@ -72,39 +68,6 @@ int main(int argc, char *argv[]){
     SDL_DestroyWindow(window);
     SDL_Quit();
     return 0;
-}
-
-string readFile(ifstream &file){
-    string output, line;
-    output = "";
-
-    while(getline(file, line)){
-        output += "\n" + line;
-    };
-
-    return output;
-}
-
-void drawMaze(SDL_Renderer *renderer, const string& maze, int wallSize, int pos_x, int pos_y){
-    SDL_Rect wall;
-    int x = pos_x;
-    int y = pos_y;
-    int j = 0;
-
-    for(int i = 0; i < maze.length(); i++){
-        if(maze[i] == '\n'){
-            y += wallSize;
-            x = pos_x;
-        } else {
-            if(maze[i] == 'W'){
-                wall = {x, y, wallSize, wallSize};
-                SDL_RenderFillRect(renderer, &wall);
-            } 
-            
-            x += wallSize;
-        }   
-    }
-
 }
 
 //to compile
