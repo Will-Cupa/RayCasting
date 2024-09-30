@@ -46,8 +46,25 @@ int main(int argc, char *argv[]){
             }
         }
 
-        //Update
+        switch( events.key.keysym.sym ){
+                    case SDLK_LEFT:
+                        px = -1;
+                        break;
+                    case SDLK_RIGHT:
+                        px =  1;
+                        break;
+                    case SDLK_UP:
+                        py = -1;
+                        break;
+                    case SDLK_DOWN:
+                        py =  1;
+                        break;
+                    default:
+                        break;
+        }
 
+        //Update
+        
         //Draw
         SDL_Rect rectangle = {px - 10, py - 10, 20, 20};
 
