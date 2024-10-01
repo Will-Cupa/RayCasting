@@ -1,5 +1,6 @@
 #include <SDL2/SDL.h>
 #include <iostream>
+#include <stdexcept>
 #include "maze.h"
 
 using namespace std;
@@ -46,6 +47,7 @@ int main(int argc, char *argv[]){
             }
         }
 
+        int input_x, input;
         switch( events.key.keysym.sym ){
                     case SDLK_LEFT:
                         px = -1;
@@ -71,7 +73,7 @@ int main(int argc, char *argv[]){
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer); //not really clearing, more like filling
         
-        SDL_SetRenderDrawColor(renderer, 0,20,255,255);
+        SDL_SetRenderDrawColor(renderer, 255,255,255,255);
         drawMaze(renderer, maze, 40, 30, 50);
         
         SDL_SetRenderDrawColor(renderer, 0,240,255,255);
@@ -88,4 +90,6 @@ int main(int argc, char *argv[]){
 }
 
 //to compile
-//g++ main.cpp -ID:\C++Libraries\SDL2\include -LD:\C++Libraries\SDL2\lib -lmingw32 -lSDL2main -lSDL2 -o main
+//g++ *.cpp -ID:\C++Libraries\SDL2\include -LD:\C++Libraries\SDL2\lib -lmingw32 -lSDL2main -lSDL2 -o main
+
+//g++ *.cpp -IZ:\personal\SDL2Library\include -LZ:\personal\SDL2Library\lib -lmingw32 -lSDL2main -lSDL2 -o main
