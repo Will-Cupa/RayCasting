@@ -47,33 +47,61 @@ int main(int argc, char *argv[]){
             }
         }
 
-        int input_x, input;
-        switch( events.key.keysym.sym ){
-                    case SDLK_LEFT:
-                        px = -1;
-                        break;
-                    case SDLK_RIGHT:
-                        px =  1;
-                        break;
-                    case SDLK_UP:
-                        py = -1;
-                        break;
-                    case SDLK_DOWN:
-                        py =  1;
-                        break;
-                    default:
-                        break;
+        int input_x = 0;
+        int input_y = 0;
+
+        switch( event.type ){
+            /* Look for a keypress */
+            case SDL_KEYDOWN:
+                switch( events.key.keysym.sym ){
+                            case SDLK_LEFT:
+                                input_x = -1;
+                                break;
+                            case SDLK_RIGHT:
+                                input_x =  1;
+                                break;
+                            case SDLK_UP:
+                                input_y = -1;
+                                break;
+                            case SDLK_DOWN:
+                                input_y =  1;
+                                break;
+                            default:
+                                break;
+                }
+                break;
+            /*  check if key is released */
+            case SDL_KEYUP:
+                switch( events.key.keysym.sym ){
+                            case SDLK_LEFT:
+                                input_x = 0;
+                                break;
+                            case SDLK_RIGHT:
+                                input_x =  0;
+                                break;
+                            case SDLK_UP:
+                                input_y = 0;
+                                break;
+                            case SDLK_DOWN:
+                                input_y =  0;
+                                break;
+                            default:
+                                break;
+                }
+                break;
         }
 
         //Update
         
+        px += input_x;
+
         //Draw
         SDL_Rect rectangle = {px - 10, py - 10, 20, 20};
 
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer); //not really clearing, more like filling
         
-        SDL_SetRenderDrawColor(renderer, 255,255,255,255);
+        SDL_SetRenderDrawColor(renderer, 0,255,255,255);
         drawMaze(renderer, maze, 40, 30, 50);
         
         SDL_SetRenderDrawColor(renderer, 0,240,255,255);
