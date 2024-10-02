@@ -1,10 +1,5 @@
-.vscode/c_cpp_properties.json
-.vscode/launch.json
-.vscode/settings.json
-include
-lib
+.vscode
 bin
-.vscode/tasks.json
 src/build/Debug/main.o
 src/SDL2.dll
 src/main.exe

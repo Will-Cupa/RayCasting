@@ -7,6 +7,8 @@ using namespace std;
 
 int px = 0;
 int py = 0;
+const int PLAYER_SPEED = 10;
+const int HEIGHT = 600, WIDTH = 800;
 
 int main(int argc, char *argv[]){
     int init = SDL_Init(SDL_INIT_EVERYTHING);
@@ -15,7 +17,7 @@ int main(int argc, char *argv[]){
         return init;
     };
 
-    SDL_Window *window = SDL_CreateWindow("Raycast", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_SHOWN);
+    SDL_Window *window = SDL_CreateWindow("Raycast", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
     
     if (window == nullptr){
         cerr << "Failed to create window" << endl;
@@ -38,63 +40,45 @@ int main(int argc, char *argv[]){
     mazeFile.close();
 
     while(running){
+        
+        int input_x = 0;
+        int input_y = 0;
+
         //Events input
         while (SDL_PollEvent(&events)){
             switch (events.type){
                 case SDL_QUIT:
                     running = false;
                     break;
+                /* Look for a keypress */
+                case SDL_KEYDOWN:
+                    switch( events.key.keysym.sym ){
+                                case SDLK_LEFT:
+                                    input_x = -1;
+                                    break;
+                                case SDLK_RIGHT:
+                                    input_x =  1;
+                                    break;
+                                case SDLK_UP:
+                                    input_y = -1;
+                                    break;
+                                case SDLK_DOWN:
+                                    input_y =  1;
+                                    break;
+                                default:
+                                    break;
+                    }
+                    break;
             }
         }
 
-        int input_x = 0;
-        int input_y = 0;
-
-        switch( event.type ){
-            /* Look for a keypress */
-            case SDL_KEYDOWN:
-                switch( events.key.keysym.sym ){
-                            case SDLK_LEFT:
-                                input_x = -1;
-                                break;
-                            case SDLK_RIGHT:
-                                input_x =  1;
-                                break;
-                            case SDLK_UP:
-                                input_y = -1;
-                                break;
-                            case SDLK_DOWN:
-                                input_y =  1;
-                                break;
-                            default:
-                                break;
-                }
-                break;
-            /*  check if key is released */
-            case SDL_KEYUP:
-                switch( events.key.keysym.sym ){
-                            case SDLK_LEFT:
-                                input_x = 0;
-                                break;
-                            case SDLK_RIGHT:
-                                input_x =  0;
-                                break;
-                            case SDLK_UP:
-                                input_y = 0;
-                                break;
-                            case SDLK_DOWN:
-                                input_y =  0;
-                                break;
-                            default:
-                                break;
-                }
-                break;
-        }
+        
+        
 
         //Update
         
-        px += input_x;
-
+        px += input_x*PLAYER_SPEED;
+        py += input_y*PLAYER_SPEED;
         //Draw
         SDL_Rect rectangle = {px - 10, py - 10, 20, 20};
 
@@ -102,7 +86,7 @@ int main(int argc, char *argv[]){
         SDL_RenderClear(renderer); //not really clearing, more like filling
         
         SDL_SetRenderDrawColor(renderer, 0,255,255,255);
-        drawMaze(renderer, maze, 40, 30, 50);
+        drawMaze(renderer, maze, 45, WIDTH/2, HEIGHT/2);
         
         SDL_SetRenderDrawColor(renderer, 0,240,255,255);
         SDL_RenderFillRect(renderer, &rectangle);
