@@ -18,6 +18,8 @@ class Maze{
 
     void draw(SDL_Renderer *renderer);
 
+    void getPlayerSpawnPoint(int coord[2]);
+
 };
 
 string readFile(ifstream &file);

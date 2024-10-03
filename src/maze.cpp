@@ -38,6 +38,7 @@ void Maze::draw(SDL_Renderer *renderer){
     int x = pos_x;
     int y = pos_y;
 
+    //Going across the string and draw a square for each 'W'
     for(int i = 0; i < layout.length(); i++){
         if(layout[i] == '\n'){
             y += wallSize;
@@ -50,5 +51,16 @@ void Maze::draw(SDL_Renderer *renderer){
             x += wallSize;
         }   
     }
+}
 
+void Maze::getPlayerSpawnPoint(int coord[2]){
+    coord[0] = 1;
+    coord[1] = 2;
+    /*
+    for(int i = 0; i < layout.length(); i++){
+        if(layout[i] == 'P'){
+            return *coord;
+        }
+    }
+    */
 }
