@@ -14,13 +14,20 @@ string readFile(ifstream &file){
         output += "\n" + line;
         height++;
     };
+    file.close();
     return output + (char)width + (char)height;
 }
 
-void drawMaze(SDL_Renderer *renderer, const string& maze, int wallSize, int pos_x, int pos_y){
+
+Maze::Maze(ifstream &file, int wallSize){
+    layout = readFile(file);
+    (*this).wallSize = wallSize;
+}
+
+void Maze::draw(SDL_Renderer *renderer, int wallSize, int pos_x, int pos_y){
     SDL_Rect wall;
-    int mazeWidth = (int)maze[maze.length()-2];
-    int mazeHeight = (int)maze[maze.length()-1];
+    int mazeWidth = (int)layout[layout.length()-2];
+    int mazeHeight = (int)layout[layout.length()-1];
 
     pos_x -= (mazeWidth*wallSize)/2;
     pos_y -= (mazeHeight*wallSize)/2 + wallSize;
@@ -28,12 +35,12 @@ void drawMaze(SDL_Renderer *renderer, const string& maze, int wallSize, int pos_
     int x = pos_x;
     int y = pos_y;
 
-    for(int i = 0; i < maze.length(); i++){
-        if(maze[i] == '\n'){
+    for(int i = 0; i < layout.length(); i++){
+        if(layout[i] == '\n'){
             y += wallSize;
             x = pos_x;
         } else {
-            if(maze[i] == 'W'){
+            if(layout[i] == 'W'){
                 wall = {x, y, wallSize, wallSize};
                 SDL_RenderFillRect(renderer, &wall);
             } 

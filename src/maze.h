@@ -6,7 +6,19 @@
 
 using namespace std;
 
-void drawMaze(SDL_Renderer *renderer, const string &maze, int wallSize, int x, int y);
+class Maze{
+    private :
+
+    int wallSize;
+    string layout;
+
+    public :
+
+    Maze(ifstream &file, int wallSize);
+
+    void draw(SDL_Renderer *renderer, int wallSize, int x, int y);
+
+};
 
 string readFile(ifstream &file);
 

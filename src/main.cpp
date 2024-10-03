@@ -36,8 +36,9 @@ int main(int argc, char *argv[]){
     SDL_Event events;
 
     ifstream mazeFile("maze.txt");
-    string maze = readFile(mazeFile);
-    mazeFile.close();
+
+    Maze maze(mazeFile, 40);
+
 
     while(running){
         
@@ -72,9 +73,6 @@ int main(int argc, char *argv[]){
             }
         }
 
-        
-        
-
         //Update
         
         px += input_x*PLAYER_SPEED;
@@ -86,7 +84,7 @@ int main(int argc, char *argv[]){
         SDL_RenderClear(renderer); //not really clearing, more like filling
         
         SDL_SetRenderDrawColor(renderer, 0,255,255,255);
-        drawMaze(renderer, maze, 45, WIDTH/2, HEIGHT/2);
+        maze.draw(renderer, 45, WIDTH/2, HEIGHT/2);
         
         SDL_SetRenderDrawColor(renderer, 0,240,255,255);
         SDL_RenderFillRect(renderer, &rectangle);
