@@ -19,18 +19,21 @@ string readFile(ifstream &file){
 }
 
 
-Maze::Maze(ifstream &file, int wallSize){
+Maze::Maze(ifstream &file, int wallSize, int pos_x, int pos_y){
     layout = readFile(file);
     (*this).wallSize = wallSize;
+    x = pos_x;
+    y = pos_y;
 }
 
-void Maze::draw(SDL_Renderer *renderer, int wallSize, int pos_x, int pos_y){
+void Maze::draw(SDL_Renderer *renderer){
     SDL_Rect wall;
     int mazeWidth = (int)layout[layout.length()-2];
     int mazeHeight = (int)layout[layout.length()-1];
 
-    pos_x -= (mazeWidth*wallSize)/2;
-    pos_y -= (mazeHeight*wallSize)/2 + wallSize;
+    //center the drawing on the coordinates
+    int pos_x = x - (mazeWidth*wallSize)/2;
+    int pos_y = y - (mazeHeight*wallSize)/2 - wallSize;
 
     int x = pos_x;
     int y = pos_y;

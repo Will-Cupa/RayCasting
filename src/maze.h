@@ -8,15 +8,15 @@ using namespace std;
 
 class Maze{
     private :
-
+    int x, y;
     int wallSize;
     string layout;
 
     public :
 
-    Maze(ifstream &file, int wallSize);
+    Maze(ifstream &file, int wallSize, int pos_x, int pos_y);
 
-    void draw(SDL_Renderer *renderer, int wallSize, int x, int y);
+    void draw(SDL_Renderer *renderer);
 
 };
 

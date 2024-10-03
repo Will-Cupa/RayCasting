@@ -37,7 +37,7 @@ int main(int argc, char *argv[]){
 
     ifstream mazeFile("maze.txt");
 
-    Maze maze(mazeFile, 40);
+    Maze maze(mazeFile, 40, WIDTH/2, HEIGHT/2);
 
 
     while(running){
@@ -84,7 +84,7 @@ int main(int argc, char *argv[]){
         SDL_RenderClear(renderer); //not really clearing, more like filling
         
         SDL_SetRenderDrawColor(renderer, 0,255,255,255);
-        maze.draw(renderer, 45, WIDTH/2, HEIGHT/2);
+        maze.draw(renderer);
         
         SDL_SetRenderDrawColor(renderer, 0,240,255,255);
         SDL_RenderFillRect(renderer, &rectangle);
