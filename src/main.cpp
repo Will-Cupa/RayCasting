@@ -7,7 +7,7 @@ using namespace std;
 
 int px = 0;
 int py = 0;
-const int PLAYER_SPEED = 10;
+const int PLAYER_SPEED = 2;
 const int HEIGHT = 600, WIDTH = 800;
 
 int main(int argc, char *argv[]){
@@ -80,7 +80,7 @@ int main(int argc, char *argv[]){
         px += input_x*PLAYER_SPEED;
         py += input_y*PLAYER_SPEED;
         //Draw
-        SDL_Rect rectangle = {px - 10, py - 10, 20, 20};
+        SDL_Rect rectangle = {px - 2, py - 2, 4, 4};
 
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer); //not really clearing, more like filling
