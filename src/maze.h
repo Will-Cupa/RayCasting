@@ -8,6 +8,8 @@
 
 using namespace std;
 
+const int WALL = 1, SPAWN_POINT = 2;
+
 class Maze{
     private :
     int x, y, width, height;
@@ -18,7 +20,9 @@ class Maze{
 
     Maze(ifstream &file, int wallSize, int pos_x, int pos_y);
 
-    int** readFile(ifstream &file);
+    void makeLayout(ifstream &file);
+
+    void initializedDimension(ifstream &file);
 
     void draw(SDL_Renderer *renderer);
 

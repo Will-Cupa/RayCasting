@@ -38,8 +38,14 @@ int main(int argc, char *argv[]){
     ifstream mazeFile("maze.txt");
 
     Maze maze(mazeFile, 40, WIDTH/2, HEIGHT/2);
-    maze.displayLayout();
 
+    int spawnCoord[2];
+
+    maze.getPlayerSpawnPoint(spawnCoord);
+
+    px = spawnCoord[0];
+    py = spawnCoord[1];
+    cout << px << " " << py;
     while(running){
         
         int input_x = 0;
@@ -78,7 +84,7 @@ int main(int argc, char *argv[]){
         px += input_x*PLAYER_SPEED;
         py += input_y*PLAYER_SPEED;
         //Draw
-        SDL_Rect rectangle = {px - 2, py - 2, 4, 4};
+        SDL_Rect rectangle = {px - 5, py - 5, 10, 10};
 
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer); //not really clearing, more like filling
@@ -86,7 +92,7 @@ int main(int argc, char *argv[]){
         SDL_SetRenderDrawColor(renderer, 0,255,255,255);
         maze.draw(renderer);
         
-        SDL_SetRenderDrawColor(renderer, 0,240,255,255);
+        SDL_SetRenderDrawColor(renderer, 0,0,255,255);
         SDL_RenderFillRect(renderer, &rectangle);
 
         SDL_RenderPresent(renderer);

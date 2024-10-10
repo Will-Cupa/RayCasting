@@ -1,33 +1,36 @@
 #include "maze.h"
 using namespace std;
 
-int** Maze::readFile(ifstream &file){
-    string line, output;
+void Maze::initializedDimension(ifstream &file){
     height = 0;
     width = 0;
+    string line;
 
     while(getline(file, line)){
         if (width == 0)
             width = line.length();
         height++;
     };
-    
-    // Reset file pointer to the beginning
-    file.clear(); // Clear any error flags
-    file.seekg(0, ios::beg); // Move the file pointer to the beginning
 
     layout = new int*[height];
     for (int i = 0; i < height; i++){
         layout[i] = new int[width];
     }
 
+    file.clear(); // Clear any error flags
+    file.seekg(0, ios::beg); // Move the file pointer to the beginning
+}
+
+void Maze::makeLayout(ifstream &file){
+    string line;
     int i = 0;
 
-    // Second pass: populate the layout
     while(getline(file, line)){
         for(int j = 0; j < width; j++){
             if(line[j] == 'W'){
-                layout[i][j] = 1;
+                layout[i][j] = WALL;
+            }else if(line[j] == 'P'){
+                layout[i][j] = SPAWN_POINT;
             }else{
                 layout[i][j] = 0;
             }
@@ -36,12 +39,13 @@ int** Maze::readFile(ifstream &file){
     };
 
     file.close();
-    return layout;
 }
 
 
 Maze::Maze(ifstream &file, int wallSize, int pos_x, int pos_y){
-    layout = readFile(file);
+    initializedDimension(file);
+    makeLayout(file);
+
     (*this).wallSize = wallSize;
     x = pos_x;
     y = pos_y;
@@ -58,7 +62,7 @@ void Maze::draw(SDL_Renderer *renderer){
     //Going across the string and draw a square for each 'W'
     for(int i = 0; i < height; i++){
         for(int j = 0; j < width; j++){
-            if(layout[i][j]){
+            if(layout[i][j] == WALL){
                 SDL_Rect rect =  {x, y, wallSize, wallSize};
                 SDL_RenderFillRect(renderer,&rect);
             } 
@@ -70,15 +74,16 @@ void Maze::draw(SDL_Renderer *renderer){
 }
 
 void Maze::getPlayerSpawnPoint(int coord[2]){
-    coord[0] = 1;
-    coord[1] = 2;
-    /*
-    for(int i = 0; i < layout.length(); i++){
-        if(layout[i] == 'P'){
-            return *coord;
+    coord[0] = -1;
+    coord[1] = -1;
+    for(int i = 0; i < height; i++){
+        for(int j = 0; j < width; j++){
+            if(layout[i][j] == 2){
+                coord[0] = (x - (width*wallSize)/2) + j * wallSize + wallSize/2;
+                coord[1] = (y - (width*wallSize)/2) + i * wallSize;
+            } 
         }
     }
-    */
 }
 
 void Maze::displayLayout(){
