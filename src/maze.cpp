@@ -24,13 +24,15 @@ void Maze::initializedDimension(ifstream &file){
 void Maze::makeLayout(ifstream &file){
     string line;
     int i = 0;
+    bool spawnSet = false;
 
     while(getline(file, line)){
         for(int j = 0; j < width; j++){
             if(line[j] == 'W'){
                 layout[i][j] = WALL;
-            }else if(line[j] == 'P'){
+            }else if(line[j] == 'P' && !spawnSet){
                 layout[i][j] = SPAWN_POINT;
+                spawnSet = true;
             }else{
                 layout[i][j] = 0;
             }
@@ -74,11 +76,11 @@ void Maze::draw(SDL_Renderer *renderer){
 }
 
 void Maze::getPlayerSpawnPoint(int coord[2]){
-    coord[0] = -1;
-    coord[1] = -1;
+    coord[0] = 0;
+    coord[1] = 0;
     for(int i = 0; i < height; i++){
         for(int j = 0; j < width; j++){
-            if(layout[i][j] == 2){
+            if(layout[i][j] == SPAWN_POINT){
                 coord[0] = (x - (width*wallSize)/2) + j * wallSize + wallSize/2;
                 coord[1] = (y - (width*wallSize)/2) + i * wallSize;
             } 
