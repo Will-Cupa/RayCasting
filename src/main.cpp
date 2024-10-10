@@ -45,7 +45,7 @@ int main(int argc, char *argv[]){
 
     px = spawnCoord[0];
     py = spawnCoord[1];
-    cout << px << " " << py;
+
     while(running){
         
         int input_x = 0;
@@ -57,6 +57,7 @@ int main(int argc, char *argv[]){
                 case SDL_QUIT:
                     running = false;
                     break;
+                    
                 /* Look for a keypress */
                 case SDL_KEYDOWN:
                     switch( events.key.keysym.sym ){
@@ -75,14 +76,22 @@ int main(int argc, char *argv[]){
                                 default:
                                     break;
                     }
-                    break;
             }
         }
 
+
+
+
         //Update
+
+        //check collision
+        if(!maze.isColliding(px + input_x*PLAYER_SPEED, py + input_y*PLAYER_SPEED)){
+            //update_position
+            px += input_x*PLAYER_SPEED;
+            py += input_y*PLAYER_SPEED;
+        }
         
-        px += input_x*PLAYER_SPEED;
-        py += input_y*PLAYER_SPEED;
+        
         //Draw
         SDL_Rect rectangle = {px - 5, py - 5, 10, 10};
 

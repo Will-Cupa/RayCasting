@@ -49,40 +49,40 @@ Maze::Maze(ifstream &file, int wallSize, int pos_x, int pos_y){
     makeLayout(file);
 
     (*this).wallSize = wallSize;
-    x = pos_x;
-    y = pos_y;
+    
+    //center the drawing on the coordinates
+    x = pos_x - (width*wallSize)/2;
+    y = pos_y - (height*wallSize)/2 - wallSize;;
 }
 
 void Maze::draw(SDL_Renderer *renderer){
-    //center the drawing on the coordinates
-    int pos_x = x - (width*wallSize)/2;
-    int pos_y = y - (height*wallSize)/2 - wallSize;
-
-    int x = pos_x;
-    int y = pos_y;
+    int xDraw = x;
+    int yDraw = y;
 
     //Going across the string and draw a square for each 'W'
     for(int i = 0; i < height; i++){
         for(int j = 0; j < width; j++){
             if(layout[i][j] == WALL){
-                SDL_Rect rect =  {x, y, wallSize, wallSize};
+                SDL_Rect rect =  {xDraw, yDraw, wallSize, wallSize};
                 SDL_RenderFillRect(renderer,&rect);
             } 
-            x += wallSize;
+            xDraw += wallSize;
         } 
-        y += wallSize;
-        x = pos_x;  
+        yDraw += wallSize;
+        xDraw = x;  
     }
 }
 
 void Maze::getPlayerSpawnPoint(int coord[2]){
-    coord[0] = 0;
-    coord[1] = 0;
+    // center player in cell
+    coord[0] = x + wallSize/2;
+    coord[1] = y + wallSize/2;
+
     for(int i = 0; i < height; i++){
         for(int j = 0; j < width; j++){
             if(layout[i][j] == SPAWN_POINT){
-                coord[0] = (x - (width*wallSize)/2) + j * wallSize + wallSize/2;
-                coord[1] = (y - (width*wallSize)/2) + i * wallSize;
+                coord[0] += j * wallSize;
+                coord[1] += i * wallSize;
             } 
         }
     }
@@ -96,4 +96,24 @@ void Maze::displayLayout(){
         }  
         cout << endl;
     }
+}
+
+bool Maze::isColliding(int other_x, int other_y){
+    int wall_x = x;
+    int wall_y = y;
+    
+    for(int i = 0; i < height; i++){
+        for(int j = 0; j < width; j++){
+            if(other_x > wall_x && other_x < wall_x + wallSize &&
+               other_y > wall_y && other_y < wall_y + wallSize){
+                
+                return true;
+            }
+            wall_x += wallSize;
+        }
+        wall_x = x;
+        wall_y += wallSize;
+    }
+
+    return false;
 }
