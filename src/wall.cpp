@@ -13,5 +13,5 @@ void Wall::draw(SDL_Renderer *renderer){
 
 bool Wall::pointColliding(int other_x, int other_y){
     return (other_x > this->x && other_x < this->x + size &&
-            other_y > this->y && other_y < this->y + size)
+            other_y > this->y && other_y < this->y + size);
 }

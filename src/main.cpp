@@ -38,10 +38,8 @@ int main(int argc, char *argv[]){
     ifstream mazeFile("maze.txt");
 
     Maze maze(mazeFile, 40, WIDTH/2, HEIGHT/2);
+    maze.displayLayout();
 
-    int coord[2];
-    maze.getPlayerSpawnPoint(coord);
-    cout << coord[1] <<endl;
     while(running){
         
         int input_x = 0;
