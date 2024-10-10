@@ -108,6 +108,7 @@ int main(int argc, char *argv[]){
 
     }
 
+    maze.destroy();
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();

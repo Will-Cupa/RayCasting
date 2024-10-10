@@ -31,6 +31,8 @@ class Maze{
     void displayLayout();
 
     bool isColliding(int x, int y);
+
+    void destroy();
 };
 
 #endif

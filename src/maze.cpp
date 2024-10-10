@@ -104,10 +104,12 @@ bool Maze::isColliding(int other_x, int other_y){
     
     for(int i = 0; i < height; i++){
         for(int j = 0; j < width; j++){
-            if(other_x > wall_x && other_x < wall_x + wallSize &&
-               other_y > wall_y && other_y < wall_y + wallSize){
-                
-                return true;
+            if(layout[i][j] == WALL){
+                if(other_x > wall_x && other_x < wall_x + wallSize &&
+                other_y > wall_y && other_y < wall_y + wallSize){
+                    
+                    return true;
+                }
             }
             wall_x += wallSize;
         }
@@ -116,4 +118,11 @@ bool Maze::isColliding(int other_x, int other_y){
     }
 
     return false;
+}
+
+void Maze::destroy(){
+    for(int i = 0; i < height; i++){
+        delete[] layout[i];
+    }
+    delete[] layout;
 }
