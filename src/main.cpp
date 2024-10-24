@@ -2,11 +2,10 @@
 #include <iostream>
 #include <stdexcept>
 #include "maze.h"
+#include "player.h"
 
 using namespace std;
 
-int px = 0;
-int py = 0;
 const int PLAYER_SPEED = 2;
 const int HEIGHT = 600, WIDTH = 800;
 
@@ -43,8 +42,7 @@ int main(int argc, char *argv[]){
 
     maze.getPlayerSpawnPoint(spawnCoord);
 
-    px = spawnCoord[0];
-    py = spawnCoord[1];
+    Player player(spawnCoord[0], spawnCoord[1]);
 
     while(running){
         
@@ -79,22 +77,15 @@ int main(int argc, char *argv[]){
             }
         }
 
-
-
-
         //Update
 
         //check collision
-        if(!maze.isColliding(px + input_x*PLAYER_SPEED, py + input_y*PLAYER_SPEED)){
+        if(!maze.isColliding(player.getX() + input_x*PLAYER_SPEED, player.getY() + input_y*PLAYER_SPEED)){
             //update_position
-            px += input_x*PLAYER_SPEED;
-            py += input_y*PLAYER_SPEED;
+            player.addMovement(input_x*PLAYER_SPEED, input_y*PLAYER_SPEED);
         }
         
-        
         //Draw
-        SDL_Rect rectangle = {px - 5, py - 5, 10, 10};
-
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer); //not really clearing, more like filling
         
@@ -102,7 +93,7 @@ int main(int argc, char *argv[]){
         maze.draw(renderer);
         
         SDL_SetRenderDrawColor(renderer, 0,0,255,255);
-        SDL_RenderFillRect(renderer, &rectangle);
+        player.draw(renderer, 10);
 
         SDL_RenderPresent(renderer);
 
