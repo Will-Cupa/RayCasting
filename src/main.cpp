@@ -92,7 +92,7 @@ int main(int argc, char *argv[]){
         SDL_SetRenderDrawColor(renderer, 0,255,255,255);
         maze.draw(renderer);
         
-        SDL_SetRenderDrawColor(renderer, 0,0,255,255);
+        SDL_SetRenderDrawColor(renderer, 0,0,25,255);
         player.draw(renderer, 10);
 
         SDL_RenderPresent(renderer);
@@ -107,6 +107,6 @@ int main(int argc, char *argv[]){
 }
 
 //to compile
-//g++ *.cpp -ID:\C++Libraries\SDL2\include -LD:\C++Libraries\SDL2\lib -lmingw32 -lSDL2main -lSDL2 -o main
+//g++ src/*.cpp -ID:\C++Libraries\SDL2\include -LD:\C++Libraries\SDL2\lib -lmingw32 -lSDL2main -lSDL2 -o bin/main
 
-//g++ *.cpp -IZ:\personal\SDL2Library\include -LZ:\personal\SDL2Library\lib -lmingw32 -lSDL2main -lSDL2 -o main
+//g++ src/*.cpp -IZ:\personal\SDL2Library\include -LZ:\personal\SDL2Library\lib -lmingw32 -lSDL2main -lSDL2 -o bin/main
