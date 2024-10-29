@@ -92,7 +92,7 @@ int main(int argc, char *argv[]){
         SDL_SetRenderDrawColor(renderer, 0,255,255,255);
         maze.draw(renderer);
         
-        SDL_SetRenderDrawColor(renderer, 0,0,25,255);
+        SDL_SetRenderDrawColor(renderer, 255,0,0,255);
         player.draw(renderer, 10);
 
         SDL_RenderPresent(renderer);
