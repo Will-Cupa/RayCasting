@@ -38,6 +38,8 @@ int main(int argc, char *argv[]){
 
     Maze maze(mazeFile, 40, WIDTH/2, HEIGHT/2);
 
+    maze.displayLayout();
+
     int spawnCoord[2];
 
     maze.getPlayerSpawnPoint(spawnCoord);
@@ -56,7 +58,7 @@ int main(int argc, char *argv[]){
                     running = false;
                     break;
                     
-                /* Look for a keypress */
+                //Look for a keypress 
                 case SDL_KEYDOWN:
                     switch( events.key.keysym.sym ){
                                 case SDLK_LEFT:
@@ -79,15 +81,15 @@ int main(int argc, char *argv[]){
 
         //Update
 
-        //check collision
+        //Check collision
         if(!maze.isColliding(player.getX() + input_x*PLAYER_SPEED, player.getY() + input_y*PLAYER_SPEED)){
-            //update_position
+            //Update position
             player.addMovement(input_x*PLAYER_SPEED, input_y*PLAYER_SPEED);
         }
         
         //Draw
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-        SDL_RenderClear(renderer); //not really clearing, more like filling
+        SDL_RenderClear(renderer); //Not really clearing, more like filling
         
         SDL_SetRenderDrawColor(renderer, 0,255,255,255);
         maze.draw(renderer);
