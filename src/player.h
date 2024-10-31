@@ -2,11 +2,14 @@
 #define _PLAYER_H_
 
 #include <SDL2/SDL.h>
+#include <cmath>
+
+#define PI 3.141592653589793238463
 
 class Player{
     private:
     int x, y;
-    int direction[2] = {0,1};
+    double direction[2] = {0,-1};
 
     public:
     Player(int x, int y);
@@ -21,9 +24,15 @@ class Player{
 
     void addMovement(int x, int y);
 
+    void rotate(double direction);
+
     void setPos(int x, int y);
 
     void draw(SDL_Renderer *renderer, int size);
 };
+
+double radToDeg(double radians);
+
+double degToRad(double degrees);
 
 #endif

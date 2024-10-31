@@ -38,8 +38,6 @@ int main(int argc, char *argv[]){
 
     Maze maze(mazeFile, 40, WIDTH/2, HEIGHT/2);
 
-    maze.displayLayout();
-
     int spawnCoord[2];
 
     maze.getPlayerSpawnPoint(spawnCoord);
@@ -84,7 +82,8 @@ int main(int argc, char *argv[]){
         //Check collision
         if(!maze.isColliding(player.getX() + input_x*PLAYER_SPEED, player.getY() + input_y*PLAYER_SPEED)){
             //Update position
-            player.addMovement(input_x*PLAYER_SPEED, input_y*PLAYER_SPEED);
+            player.rotate(input_x);
+            player.addMovement(0, input_y*PLAYER_SPEED);
         }
         
         //Draw
