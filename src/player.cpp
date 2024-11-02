@@ -29,9 +29,9 @@ void Player::setPos(int x, int y){
     (*this).y = y;
 }
 
-void Player::addMovement(int speed_x, int speed_y){
-    (*this).x += direction[0]*speed_x;
-    (*this).y += direction[1]*speed_y;
+void Player::addMovement(int speed){
+    (*this).x += direction[0] * speed;
+    (*this).y += direction[1] * speed;
 }
 
 void Player::rotate(double angle){

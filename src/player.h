@@ -9,7 +9,7 @@
 class Player{
     private:
     int x, y;
-    double direction[2] = {0,-1};
+    double direction[2] = {0,1};
 
     public:
     Player(int x, int y);
@@ -22,7 +22,7 @@ class Player{
 
     void setY(int y);
 
-    void addMovement(int x, int y);
+    void addMovement(int speed);
 
     void rotate(double direction);
 

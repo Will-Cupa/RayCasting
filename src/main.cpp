@@ -83,7 +83,7 @@ int main(int argc, char *argv[]){
         if(!maze.isColliding(player.getX() + input_x*PLAYER_SPEED, player.getY() + input_y*PLAYER_SPEED)){
             //Update position
             player.rotate(input_x);
-            player.addMovement(0, input_y*PLAYER_SPEED);
+            player.addMovement(input_y*PLAYER_SPEED);
         }
         
         //Draw
