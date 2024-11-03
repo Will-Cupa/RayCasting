@@ -12,21 +12,21 @@ class Player{
     float direction[2] = {0,1};
 
     public:
-    Player(int x, int y);
+    Player(float x, float y);
 
-    int getX();
+    float getX();
 
-    int getY();
+    float getY();
 
-    void setX(int x);
+    void setX(float x);
 
-    void setY(int y);
+    void setY(float y);
 
     void addMovement(int speed);
 
     void rotate(double direction);
 
-    void setPos(int x, int y);
+    void setPos(float x, float y);
 
     void draw(SDL_Renderer *renderer, int size);
 };

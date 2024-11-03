@@ -3,28 +3,28 @@
 
 using namespace std;
 
-Player::Player(int x, int y){
+Player::Player(float x, float y){
     (*this).x = x;
     (*this).y = y;
 }
 
-int Player::getX(){
+float Player::getX(){
     return x;
 }
 
-int Player::getY(){
+float Player::getY(){
     return y;
 }
 
-void Player::setX(int x){
+void Player::setX(float x){
     (*this).x = x;
 }
 
-void Player::setY(int y){
+void Player::setY(float y){
     (*this).y = y;
 }
 
-void Player::setPos(int x, int y){
+void Player::setPos(float x, float y){
     (*this).x = x;
     (*this).y = y;
 }
