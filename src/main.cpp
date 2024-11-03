@@ -6,7 +6,7 @@
 
 using namespace std;
 
-const int PLAYER_SPEED = 2;
+const int PLAYER_SPEED = 20;
 const int HEIGHT = 600, WIDTH = 800;
 
 int main(int argc, char *argv[]){
@@ -66,10 +66,10 @@ int main(int argc, char *argv[]){
                                     input_x =  1;
                                     break;
                                 case SDLK_UP:
-                                    input_y = -1;
+                                    input_y =  1;
                                     break;
                                 case SDLK_DOWN:
-                                    input_y =  1;
+                                    input_y = -1;
                                     break;
                                 default:
                                     break;

@@ -8,8 +8,8 @@
 
 class Player{
     private:
-    int x, y;
-    double direction[2] = {0,1};
+    float x, y;
+    float direction[2] = {0,1};
 
     public:
     Player(int x, int y);
