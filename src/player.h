@@ -19,6 +19,8 @@ class Player{
 
     float getY();
 
+    double getAngle();
+
     void setX(float x);
 
     void setY(float y);

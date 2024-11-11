@@ -1,5 +1,4 @@
 #include "player.h"
-#include <iostream> 
 
 using namespace std;
 
@@ -17,6 +16,10 @@ float Player::getX(){
 
 float Player::getY(){
     return y;
+}
+
+double Player::getAngle(){
+    return angle;
 }
 
 void Player::setX(float x){

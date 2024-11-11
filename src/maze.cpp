@@ -52,7 +52,7 @@ Maze::Maze(ifstream &file, int wallSize, int pos_x, int pos_y){
     
     //center the drawing on the coordinates
     x = pos_x - (width*wallSize)/2;
-    y = pos_y - (height*wallSize)/2 - wallSize;;
+    y = pos_y - (height*wallSize)/2;
 }
 
 void Maze::draw(SDL_Renderer *renderer){
@@ -86,6 +86,46 @@ void Maze::getPlayerSpawnPoint(int coord[2]){
             } 
         }
     }
+}
+
+struct pInfo Maze::getPlayerCell(Player &player){
+    float px = player.getX() - (*this).x;
+    float py = player.getY() - (*this).y;
+
+    float rx = fmod(px, wallSize);
+    float ry = fmod(py, wallSize);
+
+    int cell_x = px/wallSize;
+    int cell_y = py/wallSize;
+
+    return pInfo{cell_x, cell_y, rx, ry};
+}
+
+int Maze::getDistanceFromWall(Player &player){
+    struct pInfo playerPos = getPlayerCell(player);
+    double angle = player.getAngle();
+
+    int distX = horizontalRayCast(playerPos, angle);
+    
+    cout << distX << endl;
+
+    return distX;
+}
+
+int Maze::horizontalRayCast(pInfo playerPos, double angle){
+    float ray_x = playerPos.cell_x + (1.0f - playerPos.rx)/tan(angle);
+    float ray_y = playerPos.cell_y + (1.0f - playerPos.ry);
+    float dx = 1.0f/tan(angle);
+
+    while(layout[(int)round(ray_x)][(int)ray_y + 1] != 1){
+        ray_x += dx;
+        ray_y += 1;
+    }
+
+    ray_x -= playerPos.cell_x + (1.0f - playerPos.rx)/tan(angle);
+    ray_y -= playerPos.cell_y + (1.0f - playerPos.ry);
+
+    return sqrt(ray_x*ray_x + ray_y*ray_y);
 }
 
 void Maze::displayLayout(){
