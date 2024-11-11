@@ -49,7 +49,7 @@ void Player::rotate(double direction){
 void Player::draw(SDL_Renderer *renderer, int size){
     SDL_Rect rectangle = {(int)(x - size/2), (int)(y - size/2), size, size};
     
-    SDL_RenderDrawLine(renderer, x, y, x + (dx*30), y + (dx* 30));
+    SDL_RenderDrawLine(renderer, x, y, x + (dx*5), y + (dy*5));
     
     SDL_RenderFillRect(renderer, &rectangle);
 }
