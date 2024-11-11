@@ -6,7 +6,7 @@
 
 using namespace std;
 
-const int PLAYER_SPEED = 20;
+const int PLAYER_SPEED = 5;
 const int HEIGHT = 600, WIDTH = 800;
 
 int main(int argc, char *argv[]){
@@ -42,7 +42,7 @@ int main(int argc, char *argv[]){
 
     maze.getPlayerSpawnPoint(spawnCoord);
 
-    Player player(spawnCoord[0], spawnCoord[1]);
+    Player player(spawnCoord[0], spawnCoord[1], PLAYER_SPEED);
 
     while(running){
         
@@ -82,8 +82,8 @@ int main(int argc, char *argv[]){
         //Check collision
         if(!maze.isColliding(player.getX() + input_x*PLAYER_SPEED, player.getY() + input_y*PLAYER_SPEED)){
             //Update position
-            player.rotate(input_x);
-            player.addMovement(input_y*PLAYER_SPEED);
+            player.rotate(input_x*PLAYER_SPEED);
+            player.addMovement(input_y);
         }
         
         //Draw

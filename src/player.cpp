@@ -3,9 +3,12 @@
 
 using namespace std;
 
-Player::Player(float x, float y){
+Player::Player(float x, float y, int speed){
     (*this).x = x;
     (*this).y = y;
+    (*this).speed = speed;
+
+    angle, dx, dy = 0;
 }
 
 float Player::getX(){
@@ -29,24 +32,21 @@ void Player::setPos(float x, float y){
     (*this).y = y;
 }
 
-void Player::addMovement(int speed){
-    (*this).x += direction[0] * speed;
-    (*this).y += direction[1] * speed;
+void Player::addMovement(int input){
+    (*this).x += dx * input;
+    (*this).y += dy * input;
 }
 
-void Player::rotate(double angle){
-    angle = degToRad(angle);
-    double sinResult = sin(angle);
-    double cosResult = cos(angle);
-
-    direction[0] = cosResult * direction[0] - sinResult * direction[1];
-    direction[1] = sinResult * direction[0] + cosResult * direction[1];
+void Player::rotate(double direction){
+    angle += degToRad(direction);
+    dx = cos(angle) * speed;
+    dy = sin(angle) * speed;
 }
 
 void Player::draw(SDL_Renderer *renderer, int size){
-    SDL_Rect rectangle = {x - size/2, y - size/2, size, size};
+    SDL_Rect rectangle = {(int)(x - size/2), (int)(y - size/2), size, size};
     
-    SDL_RenderDrawLine(renderer, x, y, x + (direction[0] * 30), y + (direction[1] * 30));
+    SDL_RenderDrawLine(renderer, x, y, x + (dx*30), y + (dx* 30));
     
     SDL_RenderFillRect(renderer, &rectangle);
 }

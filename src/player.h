@@ -8,11 +8,12 @@
 
 class Player{
     private:
-    float x, y;
-    float direction[2] = {0,1};
+    float x, y, dx, dy;
+    int speed;
+    double angle;
 
     public:
-    Player(float x, float y);
+    Player(float x, float y, int speed);
 
     float getX();
 
@@ -22,7 +23,7 @@ class Player{
 
     void setY(float y);
 
-    void addMovement(int speed);
+    void addMovement(int input);
 
     void rotate(double direction);
 
