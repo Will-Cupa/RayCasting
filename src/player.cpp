@@ -7,7 +7,9 @@ Player::Player(float x, float y, int speed){
     (*this).y = y;
     (*this).speed = speed;
 
-    angle, dx, dy = 0;
+    angle = 0; 
+    dx = 0;
+    dy = 0;
 }
 
 float Player::getX(){
@@ -44,6 +46,7 @@ void Player::rotate(double direction){
     angle += degToRad(direction);
     dx = cos(angle) * speed;
     dy = sin(angle) * speed;
+    cout << angle << endl;
 }
 
 void Player::draw(SDL_Renderer *renderer, int size){

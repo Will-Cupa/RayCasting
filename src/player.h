@@ -3,6 +3,7 @@
 
 #include <SDL2/SDL.h>
 #include <cmath>
+#include <iostream>
 
 #define PI 3.141592653589793238463
 

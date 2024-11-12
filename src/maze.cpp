@@ -92,8 +92,8 @@ struct pInfo Maze::getPlayerCell(Player &player){
     float px = player.getX() - (*this).x;
     float py = player.getY() - (*this).y;
 
-    float rx = fmod(px, wallSize);
-    float ry = fmod(py, wallSize);
+    float rx = fmod(px, wallSize)/wallSize;
+    float ry = fmod(py, wallSize)/wallSize;
 
     int cell_x = px/wallSize;
     int cell_y = py/wallSize;
@@ -107,16 +107,24 @@ int Maze::getDistanceFromWall(Player &player){
 
     int distX = horizontalRayCast(playerPos, angle);
     
-    cout << distX << endl;
+    //cout << distX << endl;
 
     return distX;
 }
 
 int Maze::horizontalRayCast(pInfo playerPos, double angle){
-    float ray_x = playerPos.cell_x + (1.0f - playerPos.rx)/tan(angle);
-    float ray_y = playerPos.cell_y + (1.0f - playerPos.ry);
-    float dx = 1.0f/tan(angle);
+    float ray_x, ray_y, dx;
 
+    if((float)tan(angle) == 0){
+        ray_x = playerPos.cell_x + (1.0f - playerPos.rx);
+        dx = 1.0f;
+    }else{
+        ray_x = playerPos.cell_x + (1.0f - playerPos.rx)/tan(angle);
+        dx = 1.0f/tan(angle);
+    }
+
+    ray_y = playerPos.cell_y + (1.0f - playerPos.ry);
+    
     while(layout[(int)round(ray_x)][(int)ray_y + 1] != 1){
         ray_x += dx;
         ray_y += 1;
