@@ -7,9 +7,7 @@ Player::Player(float x, float y, int speed){
     (*this).y = y;
     (*this).speed = speed;
 
-    angle = 0; 
-    dx = 0;
-    dy = 0;
+    angle = 0;
 }
 
 float Player::getX(){
@@ -44,14 +42,12 @@ void Player::addMovement(int input){
 
 void Player::rotate(double direction){
     angle += degToRad(direction);
-    dx = cos(angle) * speed;
-    dy = sin(angle) * speed;
-    cout << angle << endl;
+    dx = sin(angle) * speed;
+    dy = -cos(angle) * speed;
 }
 
 void Player::draw(SDL_Renderer *renderer, int size){
     SDL_Rect rectangle = {(int)(x - size/2), (int)(y - size/2), size, size};
-    
     SDL_RenderDrawLine(renderer, x, y, x + (dx*5), y + (dy*5));
     
     SDL_RenderFillRect(renderer, &rectangle);
