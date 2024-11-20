@@ -78,7 +78,7 @@ int main(int argc, char *argv[]){
         }
 
         //Update
-        maze.getDistanceFromWall(player);
+        maze.getPlayerCell(player);
         //Check collision
         if(!maze.isColliding(player.getX() + input_x*PLAYER_SPEED, player.getY() + input_y*PLAYER_SPEED)){
             //Update position
