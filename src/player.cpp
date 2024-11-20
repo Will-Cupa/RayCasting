@@ -53,6 +53,17 @@ void Player::draw(SDL_Renderer *renderer, int size){
     SDL_RenderFillRect(renderer, &rectangle);
 }
 
+void Player::CastHorizontalRay(){
+    float rx, ry;
+    float aTan = -1/tan(angle);
+    if(angle > PI){
+        ry = (((int)ry>>6)<<6) - 0.0001; //round to the nearest 64 value
+        rx = ((*this).y - ry) * aTan + *(this)
+    }else{
+
+    }
+}
+
 double radToDeg(double radians){
     return radians * (180.0/PI);
 }
