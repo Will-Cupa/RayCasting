@@ -2,10 +2,11 @@
 
 using namespace std;
 
-Player::Player(float x, float y, int speed){
+Player::Player(float x, float y, int speed, float viewPlaneSize){
     (*this).x = x;
     (*this).y = y;
     (*this).speed = speed;
+    (*this).px = viewPlaneSize/2;
 
     angle = 0;
 }
@@ -36,20 +37,30 @@ void Player::setPos(float x, float y){
 }
 
 void Player::addMovement(int input){
-    (*this).x += dx * input;
-    (*this).y += dy * input;
+    (*this).x += dx * input * speed;
+    (*this).y += dy * input * speed;
 }
 
 void Player::rotate(double direction){
     angle += degToRad(direction);
-    dx = sin(angle) * speed;
-    dy = -cos(angle) * speed;
+    dx = sin(angle);
+    dy = -cos(angle);
+
+    double n_angle = degToRad(direction);
+    float temp_px = px*cos(n_angle) - py*sin(n_angle);
+    py = px*sin(n_angle) + py*cos(n_angle);
+
+    px = temp_px;
+
+    cout << px << " " << py << endl;
 }
 
 void Player::draw(SDL_Renderer *renderer, int size){
     SDL_Rect rectangle = {(int)(x - size/2), (int)(y - size/2), size, size};
-    SDL_RenderDrawLine(renderer, x, y, x + (dx*5), y + (dy*5));
-    
+    SDL_RenderDrawLine(renderer, x, y, x + (dx*speed*5), y + (dy*speed*5));
+    SDL_RenderDrawLine(renderer, x + (dx*speed*5), y + (dy*speed*5), x + (dx*speed*5) + px,  y + (dy*speed*5) + py);
+    SDL_RenderDrawLine(renderer, x + (dx*speed*5), y + (dy*speed*5), x + (dx*speed*5) - px,  y + (dy*speed*5) - py);
+
     SDL_RenderFillRect(renderer, &rectangle);
 }
 

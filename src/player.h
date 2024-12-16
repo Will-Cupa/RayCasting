@@ -9,12 +9,14 @@
 
 class Player{
     private:
-    float x, y, dx, dy;
+    float x, y; //player position
+    float dx, dy; //direction vector
+    float px, py; //view plane (1D in this case)
     int speed;
     double angle;
 
     public:
-    Player(float x, float y, int speed);
+    Player(float x, float y, int speed, float viewPlaneSize);
 
     float getX();
 

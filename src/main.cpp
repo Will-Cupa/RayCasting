@@ -42,7 +42,7 @@ int main(int argc, char *argv[]){
 
     maze.getPlayerSpawnPoint(spawnCoord);
 
-    Player player(spawnCoord[0], spawnCoord[1], PLAYER_SPEED);
+    Player player(spawnCoord[0], spawnCoord[1], PLAYER_SPEED, 20);
 
     while(running){
         
