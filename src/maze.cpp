@@ -101,51 +101,6 @@ struct pInfo Maze::getPlayerCell(Player &player){
     return pInfo{cell_x, cell_y, rx, ry};
 }
 
-int Maze::getDistanceFromWall(Player &player){
-    struct pInfo playerPos = getPlayerCell(player);
-    double angle = player.getAngle();
-
-    int distX = horizontalRayCast(playerPos, angle);
-    
-    //cout << distX << endl;
-
-    return distX;
-}
-
-int Maze::horizontalRayCast(pInfo playerPos, double angle){
-    float ray_x, ray_y, dx;
-
-    if((float)tan(angle) == 0){
-        ray_x = playerPos.cell_x + (1.0f - playerPos.rx);
-        dx = 1.0f;
-    }else{
-        ray_x = playerPos.cell_x + (1.0f - playerPos.rx)/tan(angle);
-        dx = 1.0f/tan(angle);
-    }
-
-    ray_y = playerPos.cell_y + (1.0f - playerPos.ry);
-    
-    while(layout[(int)round(ray_x)][(int)ray_y + 1] != 1){
-        ray_x += dx;
-        ray_y += 1;
-    }
-
-    ray_x -= playerPos.cell_x + (1.0f - playerPos.rx)/tan(angle);
-    ray_y -= playerPos.cell_y + (1.0f - playerPos.ry);
-
-    return sqrt(ray_x*ray_x + ray_y*ray_y);
-}
-
-void Maze::displayLayout(){
-    for(int i = 0; i < height; i++){
-        cout << "|";
-        for(int j = 0; j < width; j++){
-            cout << layout[i][j] << "|";
-        }  
-        cout << endl;
-    }
-}
-
 bool Maze::isColliding(int other_x, int other_y){
     int wall_x = x;
     int wall_y = y;

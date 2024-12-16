@@ -32,10 +32,6 @@ class Maze{
 
     struct pInfo getPlayerCell(Player &player);
 
-    int getDistanceFromWall(Player &player);
-
-    int horizontalRayCast(struct pInfo playerPos, double angle);
-
     void displayLayout();
 
     bool isColliding(int x, int y);
