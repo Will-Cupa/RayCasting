@@ -4,6 +4,7 @@
 #include <SDL2/SDL.h>
 #include <cmath>
 #include <iostream>
+#include "maze.h"
 
 #define PI 3.141592653589793238463
 
@@ -33,6 +34,8 @@ class Player{
     void rotate(double direction);
 
     void setPos(float x, float y);
+
+    void castRay(int screenWidth, Maze maze);
 
     void draw(SDL_Renderer *renderer, int size);
 };

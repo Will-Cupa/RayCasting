@@ -55,9 +55,10 @@ void Player::rotate(double direction){
     // py = -cos(angle + degToRad(90));
 }
 
-void Player::castRay(int screenWidth){
+void Player::castRay(int screenWidth, Maze maze){
     for(int x = 0; x < screenWidth; x++)
     {
+        pInfo playeerCell = maze.getPlayerCell(this);
         //calculate ray position and direction
         double cameraX = 2 * x / double(screenWidth) - 1; //x-coordinate in camera space (-1 to 1)
         double rayDirX = dx + px * cameraX;
@@ -68,7 +69,7 @@ void Player::castRay(int screenWidth){
 
         double sideDistX;
         double sideDistY;
-        
+
         int stepX;
         int stepY;
 
