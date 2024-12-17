@@ -5,7 +5,6 @@
 #include <fstream>
 #include <iostream>
 #include <cmath>
-#include "player.h"
 
 using namespace std;
 
@@ -30,7 +29,7 @@ class Maze{
 
     void getPlayerSpawnPoint(int coord[2]);
 
-    struct pInfo getPlayerCell(Player &player);
+    struct pInfo getCellFromWorldPos(float x, float y);
 
     void displayLayout();
 
