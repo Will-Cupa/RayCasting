@@ -54,10 +54,15 @@ void Player::castRay(int screenWidth, Maze maze){
     for(int screenX = 0; screenX < screenWidth; screenX++)
     {
         pInfo playerCell = maze.getCellFromWorldPos(x,y);
+        int mapX = playerCell.cell_x;
+        int mapY = playerCell.cell_y;
+
+        cout << playerCell.rx << " " << playerCell.ry << endl;
+
         //calculate ray position and direction
-        double cameraX = 2 * x / double(screenWidth) - 1; //x-coordinate in camera space (-1 to 1)
-        double rayDirX = dx + px * cameraX;
-        double rayDirY = dy + py * cameraX;
+        double cameraX = 2 * screenX / double(screenWidth) - 1; //x-coordinate in camera space (-1 to 1)
+        double rayDirX = dx + px * viewSize * cameraX;
+        double rayDirY = dy + py * viewSize * cameraX;
 
         double deltaDistX = abs(1 / rayDirX);
         double deltaDistY = abs(1 / rayDirY);

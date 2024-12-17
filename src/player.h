@@ -3,7 +3,6 @@
 
 #include <SDL2/SDL.h>
 #include <cmath>
-#include <iostream>
 #include "maze.h"
 
 #define PI 3.141592653589793238463
