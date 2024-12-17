@@ -51,8 +51,8 @@ void Player::rotate(double direction){
     py = px*sin(n_angle) + py*cos(n_angle);
 
     px = temp_px;
-
-    cout << px << " " << py << endl;
+    // px = sin(angle + degToRad(90));
+    // py = -cos(angle + degToRad(90));
 }
 
 void Player::draw(SDL_Renderer *renderer, int size){
