@@ -55,6 +55,27 @@ void Player::rotate(double direction){
     // py = -cos(angle + degToRad(90));
 }
 
+void Player::castRay(int screenWidth){
+    for(int x = 0; x < screenWidth; x++)
+    {
+        //calculate ray position and direction
+        double cameraX = 2 * x / double(screenWidth) - 1; //x-coordinate in camera space (-1 to 1)
+        double rayDirX = dx + px * cameraX;
+        double rayDirY = dy + py * cameraX;
+
+        double deltaDistX = abs(1 / rayDirX);
+        double deltaDistY = abs(1 / rayDirY);
+
+        double sideDistX;
+        double sideDistY;
+        
+        int stepX;
+        int stepY;
+
+        bool hit;
+    }
+}
+
 void Player::draw(SDL_Renderer *renderer, int size){
     SDL_Rect rectangle = {(int)(x - size/2), (int)(y - size/2), size, size};
     SDL_RenderDrawLine(renderer, x, y, x + (dx*speed*5), y + (dy*speed*5));
