@@ -50,38 +50,87 @@ void Player::rotate(double direction){
     py = -cos(angle + degToRad(90));
 }
 
-void Player::castRay(int screenWidth, Maze maze){
-    for(int screenX = 0; screenX < screenWidth; screenX++)
-    {
-        pInfo playerCell = maze.getCellFromWorldPos(x,y);
-        int mapX = playerCell.cell_x;
-        int mapY = playerCell.cell_y;
 
-        cout << playerCell.rx << " " << playerCell.ry << endl;
+void Player::castRay(int screenWidth, Maze maze)
 
-        //calculate ray position and direction
-        double cameraX = 2 * screenX / double(screenWidth) - 1; //x-coordinate in camera space (-1 to 1)
-        double rayDirX = dx + px * viewSize * cameraX;
-        double rayDirY = dy + py * viewSize * cameraX;
+// void Player::castRay(int screenWidth, Maze maze){
+//     for(int screenX = 0; screenX < screenWidth; screenX++)
+//     {
+//         pInfo playerCell = maze.getCellFromWorldPos(x,y);
+//         int mapX = playerCell.cell_x;
+//         int mapY = playerCell.cell_y;
+//         cout << mapX << " " << mapY << endl;
 
-        double deltaDistX = abs(1 / rayDirX);
-        double deltaDistY = abs(1 / rayDirY);
+//         int** worldMap = maze.getLayout();
 
-        double sideDistX;
-        double sideDistY;
+//         double sideDistX = playerCell.rx;
+//         double sideDistY = playerCell.ry;
 
-        int stepX;
-        int stepY;
+//         //calculate ray position and direction
+//         double cameraX = 2 * screenX / double(screenWidth) - 1; //x-coordinate in camera space (-1 to 1)
+//         double rayDirX = dx + px * viewSize * cameraX;
+//         double rayDirY = dy + py * viewSize * cameraX;
 
-        bool hit;
-    }
-}
+//         double deltaDistX = (rayDirX == 0) ? 1e30 : abs(1 / rayDirX);
+//         double deltaDistY = (rayDirY == 0) ? 1e30 : abs(1 / rayDirY);
+//         double perpWallDist;
+
+//         int stepX;
+//         int stepY;
+
+//         bool hit, side;
+
+//         if (rayDirX < 0){
+//             stepX = -1;
+//         }else{
+//             stepX = 1;
+//             sideDistX = 1 - sideDistX;
+//         }
+
+//         if (rayDirY < 0)
+//         {
+//             stepY = -1;
+//             sideDistY = 1 - sideDistY;
+//         }else{
+//             stepY = 1;
+//         }
+
+//         //perform DDA
+//         while (!hit){
+//             //jump to next map square, either in x-direction, or in y-direction
+//             if (sideDistX < sideDistY){
+//                 sideDistX += deltaDistX;
+//                 mapX += stepX;
+//                 side = true;
+//             }else{
+//                 sideDistY += deltaDistY;
+//                 mapY += stepY;
+//                 side = false;
+//             }
+//             //Check if ray has hit a wall
+//             hit = worldMap[mapX][mapY] > 0;
+//         } 
+
+//         if(side){
+//             perpWallDist = (sideDistX - deltaDistX);
+//         }else{
+//             perpWallDist = (sideDistY - deltaDistY);
+//         }
+
+//         cout << mapX << " " << mapY << endl;
+
+//         xD = mapX*40 + maze.getX();
+//         yD = mapY*40 + maze.getY();
+//     }
+// }
 
 void Player::draw(SDL_Renderer *renderer, int size){
     SDL_Rect rectangle = {(int)(x - size/2), (int)(y - size/2), size, size};
     SDL_RenderDrawLine(renderer, x, y, x + (dx*speed*5), y + (dy*speed*5));
     SDL_RenderDrawLine(renderer, x + dx, y + dy, x + dx + px*viewSize,  y + dy + py*viewSize);
     SDL_RenderDrawLine(renderer, x + dx, y + dy, x + dx - px*viewSize,  y + dy - py*viewSize);
+
+    SDL_RenderDrawLine(renderer, x, y, xD,  y + yD);
 
     SDL_RenderFillRect(renderer, &rectangle);
 }

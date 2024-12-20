@@ -87,12 +87,24 @@ void Maze::getPlayerSpawnPoint(int coord[2]){
     }
 }
 
+int** Maze::getLayout(){
+    return (*this).layout;
+}
+
+int Maze::getX(){
+    return (*this).x;
+}
+
+int Maze::getY(){
+    return (*this).y;
+}
+
 struct pInfo Maze::getCellFromWorldPos(float x, float y){
     float px = x - (*this).x;
     float py = y - (*this).y;
 
-    float rx = fmod(px, wallSize)/wallSize;
-    float ry = fmod(py, wallSize)/wallSize;
+    float rx = fmod(px, wallSize);
+    float ry = fmod(py, wallSize);
 
     int cell_x = px/wallSize;
     int cell_y = py/wallSize;

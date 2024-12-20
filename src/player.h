@@ -9,6 +9,7 @@
 
 class Player{
     private:
+    float xD, yD;
     float x, y; //player position
     float dx, dy; //direction vector
     float px, py; //view plane (1D in this case)

@@ -31,6 +31,12 @@ class Maze{
 
     struct pInfo getCellFromWorldPos(float x, float y);
 
+    int** getLayout();
+
+    int getX();
+
+    int getY();
+
     void displayLayout();
 
     bool isColliding(int x, int y);
