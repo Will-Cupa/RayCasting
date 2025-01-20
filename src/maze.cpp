@@ -74,8 +74,8 @@ void Maze::draw(SDL_Renderer *renderer) const{
 
 struct playerInfo Maze::getPlayerSpawnPoint() const {
     //Player cell
-    int x = -1;
-    int y = -1;
+    int cell_x = -1;
+    int cell_y = -1;
     
     //Center player in cell
     float rx = 0.5f;
@@ -84,13 +84,17 @@ struct playerInfo Maze::getPlayerSpawnPoint() const {
     for(int i = 0; i < height; i++){
         for(int j = 0; j < width; j++){
             if(layout[i][j] == SPAWN_POINT){
-                x = j;
-                y = i;
+                cell_x = j;
+                cell_y = i;
             } 
         }
     }
 
-    return toWorldSpace(x, y, rx, ry);
+    if(cell_x == -1 || cell_y == -1){
+        throw new logic_error("Aucun point d'apparition");
+    }
+
+    return toWorldSpace(cell_x, cell_y, rx, ry);
 
 }
 
