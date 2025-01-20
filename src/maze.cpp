@@ -54,7 +54,7 @@ Maze::Maze(ifstream &file, int wallSize, int pos_x, int pos_y){
     y = pos_y - (height*wallSize)/2;
 }
 
-void Maze::draw(SDL_Renderer *renderer){
+void Maze::draw(SDL_Renderer *renderer) const{
     int xDraw = x;
     int yDraw = y;
 
@@ -72,7 +72,7 @@ void Maze::draw(SDL_Renderer *renderer){
     }
 }
 
-void Maze::getPlayerSpawnPoint(int coord[2]){
+void Maze::getPlayerSpawnPoint(int coord[2]) const {
     // center player in cell
     coord[0] = x + wallSize/2;
     coord[1] = y + wallSize/2;
@@ -87,19 +87,19 @@ void Maze::getPlayerSpawnPoint(int coord[2]){
     }
 }
 
-int** Maze::getLayout(){
+int** Maze::getLayout() const{
     return (*this).layout;
 }
 
-int Maze::getX(){
+int Maze::getX() const{
     return (*this).x;
 }
 
-int Maze::getY(){
+int Maze::getY() const{
     return (*this).y;
 }
 
-struct pInfo Maze::getCellFromWorldPos(float x, float y){
+struct cellInfo Maze::getCellFromWorldPos(float x, float y) const {
     float px = x - (*this).x;
     float py = y - (*this).y;
 
@@ -109,10 +109,17 @@ struct pInfo Maze::getCellFromWorldPos(float x, float y){
     int cell_x = px/wallSize;
     int cell_y = py/wallSize;
 
-    return pInfo{cell_x, cell_y, rx, ry};
+    return cellInfo{cell_x, cell_y, rx, ry};
 }
 
-bool Maze::isColliding(int other_x, int other_y){
+struct playerInfo Maze::toWorldSpace(float x, float y) const{
+    float px = x*wallSize + (*this).x;
+    float py = y*wallSize + (*this).y;
+
+    return playerInfo{px, py};
+}
+
+bool Maze::isColliding(int other_x, int other_y) const{
     int wall_x = x;
     int wall_y = y;
     

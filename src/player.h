@@ -19,11 +19,11 @@ class Player{
     public:
     Player(float x, float y, int speed, float viewPlaneSize);
 
-    float getX();
+    float getX() const;
 
-    float getY();
+    float getY() const;
 
-    double getAngle();
+    double getAngle() const;
 
     void setX(float x);
 
@@ -35,9 +35,9 @@ class Player{
 
     void setPos(float x, float y);
 
-    void castRay(int screenWidth, Maze maze);
+    void castRay(int screenWidth, const Maze& maze) const;
 
-    void draw(SDL_Renderer *renderer, int size);
+    void draw(SDL_Renderer *renderer, int size) const;
 };
 
 double radToDeg(double radians);

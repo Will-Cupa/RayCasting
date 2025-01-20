@@ -25,25 +25,29 @@ class Maze{
 
     void initializedDimension(ifstream &file);
 
-    void draw(SDL_Renderer *renderer);
+    void draw(SDL_Renderer *renderer) const;
 
-    void getPlayerSpawnPoint(int coord[2]);
+    void getPlayerSpawnPoint(int coord[2]) const;
 
-    struct pInfo getCellFromWorldPos(float x, float y);
+    struct cellInfo getCellFromWorldPos(float x, float y) const;
 
-    int** getLayout();
+    struct playerInfo toWorldSpace(float x, float y) const;
 
-    int getX();
+    int** getLayout() const;
 
-    int getY();
+    int getX() const;
 
-    void displayLayout();
+    int getY()const;
 
-    bool isColliding(int x, int y);
+    void displayLayout() const;
+
+    bool isColliding(int x, int y) const;
 
     void destroy();
 };
 
-struct pInfo{int cell_x, cell_y; float rx, ry;};
+struct cellInfo{int cell_x, cell_y; float rx, ry;};
+
+struct playerInfo{float x, y;};
 
 #endif
