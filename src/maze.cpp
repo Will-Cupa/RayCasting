@@ -99,7 +99,7 @@ int Maze::getY() const{
     return (*this).y;
 }
 
-struct cellInfo Maze::getCellFromWorldPos(float x, float y) const {
+struct cellInfo Maze::getCellFromWorldPos(float x, float y) const{
     float px = x - (*this).x;
     float py = y - (*this).y;
 
@@ -112,9 +112,35 @@ struct cellInfo Maze::getCellFromWorldPos(float x, float y) const {
     return cellInfo{cell_x, cell_y, rx, ry};
 }
 
-struct playerInfo Maze::toWorldSpace(float x, float y) const{
-    float px = x*wallSize + (*this).x;
-    float py = y*wallSize + (*this).y;
+struct cellInfo Maze::getCellFromWorldPos(struct playerInfo pi) const{
+    float px = pi.x - (*this).x;
+    float py = pi.y - (*this).y;
+
+    float rx = fmod(px, wallSize);
+    float ry = fmod(py, wallSize);
+
+    int cell_x = px/wallSize;
+    int cell_y = py/wallSize;
+
+    return cellInfo{cell_x, cell_y, rx, ry};
+}
+
+struct playerInfo Maze::toWorldSpace(struct cellInfo ci) const{
+    //On ajoute la position de la case et la position dans la case
+    //On les multiplie par la taille de la case
+    //On retire la position du labyrinthe
+    float px = (ci.cell_x+ci.rx)*wallSize + (*this).x;
+    float py = (ci.cell_y+ci.ry)*wallSize + (*this).y;
+
+    return playerInfo{px, py};
+}
+
+struct playerInfo Maze::toWorldSpace(int x, int y, float rx, float ry) const{
+    //On ajoute la position de la case et la position dans la case
+    //On les multiplie par la taille de la case
+    //On retire la position du labyrinthe
+    float px = (x+rx)*wallSize + (*this).x;
+    float py = (y+ry)*wallSize + (*this).y;
 
     return playerInfo{px, py};
 }
