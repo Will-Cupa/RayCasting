@@ -103,11 +103,16 @@ struct cellInfo Maze::getCellFromWorldPos(float x, float y) const{
     float px = x - (*this).x;
     float py = y - (*this).y;
 
-    float rx = fmod(px, wallSize);
-    float ry = fmod(py, wallSize);
+    float rx = px/(float)wallSize;
+    float ry = py/(float)wallSize;
 
-    int cell_x = px/wallSize;
-    int cell_y = py/wallSize;
+    int cell_x = trunc(rx);
+    int cell_y = trunc(ry);
+
+    rx -= cell_x;
+    ry -= cell_y;
+
+    cout << rx << " " << ry << endl;
 
     return cellInfo{cell_x, cell_y, rx, ry};
 }
@@ -116,11 +121,14 @@ struct cellInfo Maze::getCellFromWorldPos(struct playerInfo pi) const{
     float px = pi.x - (*this).x;
     float py = pi.y - (*this).y;
 
-    float rx = fmod(px, wallSize);
-    float ry = fmod(py, wallSize);
+    float rx = px/(float)wallSize;
+    float ry = py/(float)wallSize;
 
-    int cell_x = px/wallSize;
-    int cell_y = py/wallSize;
+    int cell_x = trunc(rx);
+    int cell_y = trunc(ry);
+
+    rx -= cell_x;
+    ry -= cell_y;
 
     return cellInfo{cell_x, cell_y, rx, ry};
 }

@@ -13,8 +13,8 @@ const int WALL = 1, SPAWN_POINT = 2;
 
 class Maze{
     private :
-    int x, y, width, height;
-    int wallSize;
+    float x, y;
+    int wallSize, width, height;
     int **layout;
 
     public :

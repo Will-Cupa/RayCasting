@@ -50,9 +50,13 @@ void Player::rotate(double direction){
     py = -cos(angle + degToRad(90));
 }
 
-void Player::castRay(int screenWidth, const Maze& maze) const {
-    struct cellInfo pi = maze.getCellFromWorldPos(x,y);
-    cout << pi.cell_x << " " << pi.cell_y << endl; 
+void Player::castRay(int screenWidth, const Maze& maze) {
+    struct cellInfo ci = maze.getCellFromWorldPos(x,y);
+
+    struct playerInfo pi = maze.toWorldSpace(ci.cell_x, ci.cell_y + 1, ci.rx, ci.ry);
+
+    xD = pi.x;
+    yD = pi.y;
 }
 
 void Player::draw(SDL_Renderer *renderer, int size) const {
@@ -60,6 +64,8 @@ void Player::draw(SDL_Renderer *renderer, int size) const {
     SDL_RenderDrawLine(renderer, x, y, x + (dx*speed*5), y + (dy*speed*5));
     SDL_RenderDrawLine(renderer, x + dx, y + dy, x + dx + px*viewSize,  y + dy + py*viewSize);
     SDL_RenderDrawLine(renderer, x + dx, y + dy, x + dx - px*viewSize,  y + dy - py*viewSize);
+
+    SDL_RenderDrawLine(renderer, x, y, xD, yD);
 
     SDL_RenderFillRect(renderer, &rectangle);
 }

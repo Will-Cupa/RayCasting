@@ -35,7 +35,7 @@ class Player{
 
     void setPos(float x, float y);
 
-    void castRay(int screenWidth, const Maze& maze) const;
+    void castRay(int screenWidth, const Maze& maze);
 
     void draw(SDL_Renderer *renderer, int size) const;
 };
