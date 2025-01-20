@@ -27,7 +27,7 @@ class Maze{
 
     void draw(SDL_Renderer *renderer) const;
 
-    void getPlayerSpawnPoint(int coord[2]) const;
+    struct playerInfo getPlayerSpawnPoint() const;
 
     struct cellInfo getCellFromWorldPos(float x, float y) const;
 

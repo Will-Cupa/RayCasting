@@ -72,19 +72,26 @@ void Maze::draw(SDL_Renderer *renderer) const{
     }
 }
 
-void Maze::getPlayerSpawnPoint(int coord[2]) const {
-    // center player in cell
-    coord[0] = x + wallSize/2;
-    coord[1] = y + wallSize/2;
+struct playerInfo Maze::getPlayerSpawnPoint() const {
+    //Player cell
+    int x = -1;
+    int y = -1;
+    
+    //Center player in cell
+    float rx = 0.5f;
+    float ry = 0.5f;
 
     for(int i = 0; i < height; i++){
         for(int j = 0; j < width; j++){
             if(layout[i][j] == SPAWN_POINT){
-                coord[0] += j * wallSize;
-                coord[1] += i * wallSize;
+                x = j;
+                y = i;
             } 
         }
     }
+
+    return toWorldSpace(x, y, rx, ry);
+
 }
 
 int** Maze::getLayout() const{
