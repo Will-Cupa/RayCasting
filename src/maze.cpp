@@ -123,14 +123,12 @@ struct cellInfo Maze::getCellFromWorldPos(float x, float y) const{
     rx -= cell_x;
     ry -= cell_y;
 
-    cout << rx << " " << ry << endl;
-
     return cellInfo{cell_x, cell_y, rx, ry};
 }
 
-struct cellInfo Maze::getCellFromWorldPos(struct playerInfo pi) const{
-    float px = pi.x - (*this).x;
-    float py = pi.y - (*this).y;
+struct cellInfo Maze::getCellFromWorldPos(struct playerInfo player) const{
+    float px = player.x - (*this).x;
+    float py = player.y - (*this).y;
 
     float rx = px/(float)wallSize;
     float ry = py/(float)wallSize;
@@ -144,17 +142,17 @@ struct cellInfo Maze::getCellFromWorldPos(struct playerInfo pi) const{
     return cellInfo{cell_x, cell_y, rx, ry};
 }
 
-struct playerInfo Maze::toWorldSpace(struct cellInfo ci) const{
+struct playerInfo Maze::toWorldSpace(struct cellInfo cell) const{
     //On ajoute la position de la case et la position dans la case
     //On les multiplie par la taille de la case
     //On retire la position du labyrinthe
-    float px = (ci.cell_x+ci.rx)*wallSize + (*this).x;
-    float py = (ci.cell_y+ci.ry)*wallSize + (*this).y;
+    float px = (cell.x+cell.rx)*wallSize + (*this).x;
+    float py = (cell.y+cell.ry)*wallSize + (*this).y;
 
     return playerInfo{px, py};
 }
 
-struct playerInfo Maze::toWorldSpace(int x, int y, float rx, float ry) const{
+struct playerInfo Maze::toWorldSpace(float x, float y, float rx, float ry) const{
     //On ajoute la position de la case et la position dans la case
     //On les multiplie par la taille de la case
     //On retire la position du labyrinthe
@@ -164,26 +162,12 @@ struct playerInfo Maze::toWorldSpace(int x, int y, float rx, float ry) const{
     return playerInfo{px, py};
 }
 
-bool Maze::isColliding(int other_x, int other_y) const{
-    int wall_x = x;
-    int wall_y = y;
-    
-    for(int i = 0; i < height; i++){
-        for(int j = 0; j < width; j++){
-            if(layout[i][j] == WALL){
-                if(other_x > wall_x && other_x < wall_x + wallSize &&
-                other_y > wall_y && other_y < wall_y + wallSize){
-                    
-                    return true;
-                }
-            }
-            wall_x += wallSize;
-        }
-        wall_x = x;
-        wall_y += wallSize;
-    }
+bool Maze::isColliding(int cell_x, int cell_y) const{
+    return layout[cell_y][cell_x] == WALL;
+}
 
-    return false;
+bool Maze::inLayout(int cell_x, int cell_y) const{
+    return cell_x < width && cell_y < height;
 }
 
 void Maze::destroy(){

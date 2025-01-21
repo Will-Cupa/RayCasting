@@ -51,12 +51,55 @@ void Player::rotate(double direction){
 }
 
 void Player::castRay(int screenWidth, const Maze& maze) {
-    struct cellInfo ci = maze.getCellFromWorldPos(x,y);
+    struct cellInfo cell = maze.getCellFromWorldPos(x,y);
 
-    struct playerInfo pi = maze.toWorldSpace(ci.cell_x, ci.cell_y + 1, ci.rx, ci.ry);
 
-    xD = pi.x;
-    yD = pi.y;
+    float sx = sqrt(1+(dy/dx)*(dy/dx));
+    float sy = sqrt(1+(dx/dy)*(dx/dy));
+
+    int step_x, step_y;
+
+    int check_x = cell.x;
+    int check_y = cell.y;
+
+    float length_x, length_y, storedLength;
+
+
+    if(dx < 0){
+        step_x = -1;
+        length_x = sx * (1 - cell.rx);
+    }else{
+        step_x = 1;
+        length_x = sx * cell.rx;
+    }
+
+    if(dy < 0){
+        step_y = -1;
+        length_y = sy * (1 - cell.ry);
+    }else{
+        step_y = 1;
+        length_y = sy * cell.ry;
+    }
+
+    while(maze.inLayout(check_x, check_y) && !maze.isColliding(check_x, check_y)){
+        if(length_x < length_y){
+            check_x += step_x;
+            storedLength = length_x;
+            length_x += sx;
+        }else{
+            check_y += step_y;
+            storedLength = length_y;
+            length_y += sy;
+        }
+    }
+
+    float collision_x = (cell.x + cell.rx) + dx * storedLength;
+    float collision_y = (cell.y + cell.ry) + dy * storedLength;
+
+    struct playerInfo pl = maze.toWorldSpace(collision_x, collision_y);
+
+    xD = pl.x;
+    yD = pl.y;
 }
 
 void Player::draw(SDL_Renderer *renderer, int size) const {

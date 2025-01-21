@@ -77,12 +77,11 @@ int main(int argc, char *argv[]){
 
         //Update
         player.castRay(1,maze);
-        //Check collision
-        if(!maze.isColliding(player.getX() + input_x*PLAYER_SPEED, player.getY() + input_y*PLAYER_SPEED)){
-            //Update position
-            player.rotate(input_x*PLAYER_SPEED);
-            player.addMovement(input_y);
-        }
+        
+        //Update position
+        player.rotate(input_x*PLAYER_SPEED);
+        player.addMovement(input_y);
+
         
         //Draw
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);

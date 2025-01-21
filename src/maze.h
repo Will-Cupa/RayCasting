@@ -33,7 +33,7 @@ class Maze{
 
     struct cellInfo getCellFromWorldPos(struct playerInfo pi) const;
 
-    struct playerInfo toWorldSpace(int x, int y, float rx=0, float ry=0) const;
+    struct playerInfo toWorldSpace(float x, float y, float rx=0, float ry=0) const;
 
     struct playerInfo toWorldSpace(struct cellInfo ci) const;
 
@@ -47,10 +47,12 @@ class Maze{
 
     bool isColliding(int x, int y) const;
 
+    bool inLayout(int cell_x, int cell_y) const;
+
     void destroy();
 };
 
-struct cellInfo{int cell_x, cell_y; float rx, ry;};
+struct cellInfo{int x, y; float rx, ry;};
 
 struct playerInfo{float x, y;};
 
