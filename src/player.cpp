@@ -50,7 +50,7 @@ void Player::rotate(double direction){
     py = -cos(angle + degToRad(90));
 }
 
-void Player::castRay(int screenWidth, const Maze& maze) {
+void Player::castRay(const Maze& maze) {
     struct cellInfo cell = maze.getCellFromWorldPos(x,y);
 
 
@@ -67,18 +67,18 @@ void Player::castRay(int screenWidth, const Maze& maze) {
 
     if(dx < 0){
         step_x = -1;
-        length_x = sx * (1 - cell.rx);
+        length_x = sx * cell.rx;
     }else{
         step_x = 1;
-        length_x = sx * cell.rx;
+        length_x = sx * (1 - cell.rx);
     }
 
     if(dy < 0){
         step_y = -1;
-        length_y = sy * (1 - cell.ry);
+        length_y = sy * cell.ry;
     }else{
         step_y = 1;
-        length_y = sy * cell.ry;
+        length_y = sy * (1 - cell.ry);
     }
 
     while(maze.inLayout(check_x, check_y) && !maze.isColliding(check_x, check_y)){

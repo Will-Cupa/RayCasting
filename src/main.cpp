@@ -76,8 +76,10 @@ int main(int argc, char *argv[]){
         }
 
         //Update
-        player.castRay(1,maze);
-        
+        for(int i = 0; i < WIDTH; i++){
+            player.castRay(maze);
+        }
+
         //Update position
         player.rotate(input_x*PLAYER_SPEED);
         player.addMovement(input_y);
