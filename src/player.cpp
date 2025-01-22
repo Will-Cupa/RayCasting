@@ -51,7 +51,7 @@ void Player::rotate(double direction){
 }
 
 float Player::castRay(int screenWidth, int offset, const Maze& maze) {
-    float rayOffset = offset * ((float)viewSize/screenWidth);
+    float rayOffset = offset * (viewSize/screenWidth);
 
     struct cellInfo cell = maze.getCellFromWorldPos(x + px*rayOffset, y + py*rayOffset);
 
