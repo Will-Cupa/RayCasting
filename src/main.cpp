@@ -76,9 +76,6 @@ int main(int argc, char *argv[]){
         }
 
         //Update
-        for(int i = 0; i < WIDTH; i++){
-            player.castRay(maze);
-        }
 
         //Update position
         player.rotate(input_x*PLAYER_SPEED);
@@ -90,10 +87,16 @@ int main(int argc, char *argv[]){
         SDL_RenderClear(renderer); //Not really clearing, more like filling
         
         SDL_SetRenderDrawColor(renderer, 0,255,255,255);
-        maze.draw(renderer);
+        // maze.draw(renderer);
+
+        for(int i = 0; i < WIDTH; i++){
+            float size = HEIGHT / player.castRay(WIDTH, i - WIDTH/2, maze);
+            SDL_SetRenderDrawColor(renderer, size/2,0,0,255);
+            SDL_RenderDrawLine(renderer, i, HEIGHT/2 - size/2, i, HEIGHT/2 + size/2);
+        }
         
         SDL_SetRenderDrawColor(renderer, 255,0,0,255);
-        player.draw(renderer, 10);
+        // player.draw(renderer, 10);
 
         SDL_RenderPresent(renderer);
 

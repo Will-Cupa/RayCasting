@@ -9,7 +9,7 @@
 
 class Player{
     private:
-    float xD, yD;
+    float x1, x2, y1, y2;
     float x, y; //player position
     float dx, dy; //direction vector
     float px, py; //view plane (1D in this case)
@@ -35,7 +35,7 @@ class Player{
 
     void setPos(float x, float y);
 
-    void castRay(const Maze& maze);
+    float castRay(int screenWidth, int offset, const Maze& maze);
 
     void draw(SDL_Renderer *renderer, int size) const;
 };

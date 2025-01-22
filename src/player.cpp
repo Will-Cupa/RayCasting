@@ -6,7 +6,7 @@ Player::Player(float x, float y, int speed, float viewPlaneSize){
     (*this).x = x;
     (*this).y = y;
     (*this).speed = speed;
-    (*this).viewSize = viewPlaneSize/2;
+    (*this).viewSize = viewPlaneSize;
 
     angle = 0;
 }
@@ -50,8 +50,10 @@ void Player::rotate(double direction){
     py = -cos(angle + degToRad(90));
 }
 
-void Player::castRay(const Maze& maze) {
-    struct cellInfo cell = maze.getCellFromWorldPos(x,y);
+float Player::castRay(int screenWidth, int offset, const Maze& maze) {
+    float rayOffset = (float)offset * ((float)viewSize/(float)screenWidth);
+
+    struct cellInfo cell = maze.getCellFromWorldPos(x + px*rayOffset, y + py*rayOffset);
 
 
     float sx = sqrt(1+(dy/dx)*(dy/dx));
@@ -98,17 +100,22 @@ void Player::castRay(const Maze& maze) {
 
     struct playerInfo pl = maze.toWorldSpace(collision_x, collision_y);
 
-    xD = pl.x;
-    yD = pl.y;
+    x1 = x + px*rayOffset;
+    y1 = y + py*rayOffset;
+
+    x2 = pl.x;
+    y2 = pl.y;
+
+    return storedLength;
 }
 
 void Player::draw(SDL_Renderer *renderer, int size) const {
     SDL_Rect rectangle = {(int)(x - size/2), (int)(y - size/2), size, size};
     SDL_RenderDrawLine(renderer, x, y, x + (dx*speed*5), y + (dy*speed*5));
-    SDL_RenderDrawLine(renderer, x + dx, y + dy, x + dx + px*viewSize,  y + dy + py*viewSize);
-    SDL_RenderDrawLine(renderer, x + dx, y + dy, x + dx - px*viewSize,  y + dy - py*viewSize);
+    SDL_RenderDrawLine(renderer, x , y , x + px*(viewSize/2),  y + py*(viewSize/2));
+    SDL_RenderDrawLine(renderer, x, y, x - px*(viewSize/2),  y - py*(viewSize/2));
 
-    SDL_RenderDrawLine(renderer, x, y, xD, yD);
+    SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
 
     SDL_RenderFillRect(renderer, &rectangle);
 }
