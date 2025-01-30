@@ -9,7 +9,7 @@
 
 class Player{
     private:
-    float x1, x2, y1, y2;
+    float x1, x2, y1, y2; //debug variable
     float x, y; //player position
     float dx, dy; //direction vector (normalized)
     float px, py; //right vector/view plane vector (normalized)
