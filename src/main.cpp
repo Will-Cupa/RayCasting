@@ -17,19 +17,32 @@ int main(int argc, char *argv[]){
     };
 
     SDL_Window *window = SDL_CreateWindow("Raycast", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
+
+    SDL_Window *debugWindow = SDL_CreateWindow("Debug", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
     
     if (window == nullptr){
         cerr << "Failed to create window" << endl;
         return -1;
     }
+
+    if (debugWindow == nullptr){
+        cerr << "Failed to create debug window" << endl;
+        return -1;
+    }
     
     SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED); 
+    SDL_Renderer *debugRenderer = SDL_CreateRenderer(debugWindow, -1, SDL_RENDERER_ACCELERATED); 
 
     if (renderer == nullptr){
         cerr << "Failed to create renderer" << endl;
         return -2;
     }
     
+    if (debugRenderer == nullptr){
+        cerr << "Failed to create debug renderer" << endl;
+        return -2;
+    }
+
     bool running = true;
 
     SDL_Event events;
@@ -90,16 +103,22 @@ int main(int argc, char *argv[]){
         // maze.draw(renderer);
 
         for(int i = 0; i < WIDTH; i++){
-            float size = HEIGHT / player.castRay(WIDTH, i - WIDTH/2, maze);
-            SDL_SetRenderDrawColor(renderer, size/2,0,0,255);
+            float size = 100/player.castRay(WIDTH, i - (WIDTH/2), maze);
+            SDL_SetRenderDrawColor(renderer, 255,0,0,255);
             SDL_RenderDrawLine(renderer, i, HEIGHT/2 - size/2, i, HEIGHT/2 + size/2);
         }
         
-        SDL_SetRenderDrawColor(renderer, 255,0,0,255);
-        // player.draw(renderer, 10);
-
         SDL_RenderPresent(renderer);
 
+        SDL_SetRenderDrawColor(debugRenderer, 0, 0, 0, 255);
+        SDL_RenderClear(debugRenderer); //Not really clearing, more like filling
+
+        SDL_SetRenderDrawColor(debugRenderer, 0,0,200,255);
+        maze.draw(debugRenderer);
+        SDL_SetRenderDrawColor(debugRenderer, 255,0,0,255);
+        player.draw(debugRenderer, 10);
+
+        SDL_RenderPresent(debugRenderer);
     }
 
     maze.destroy();

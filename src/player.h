@@ -11,9 +11,10 @@ class Player{
     private:
     float x1, x2, y1, y2;
     float x, y; //player position
-    float dx, dy; //direction vector
-    float px, py; //view plane (1D in this case)
-    int speed, viewSize;
+    float dx, dy; //direction vector (normalized)
+    float px, py; //right vector/view plane vector (normalized)
+    int speed;
+    float viewSize;
     double angle;
 
     public:

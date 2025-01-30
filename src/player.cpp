@@ -51,7 +51,7 @@ void Player::rotate(double direction){
 }
 
 float Player::castRay(int screenWidth, int offset, const Maze& maze) {
-    float rayOffset = (float)offset * ((float)viewSize/(float)screenWidth);
+    float rayOffset = offset * (viewSize/screenWidth);
 
     struct cellInfo cell = maze.getCellFromWorldPos(x + px*rayOffset, y + py*rayOffset);
 
@@ -106,6 +106,9 @@ float Player::castRay(int screenWidth, int offset, const Maze& maze) {
     x2 = pl.x;
     y2 = pl.y;
 
+    float rayDirX = dx + px * offset;
+    float rayDirY = dy + py * offset;
+
     return storedLength;
 }
 
@@ -128,3 +131,4 @@ double radToDeg(double radians){
 double degToRad(double degrees){
     return degrees * (PI/180.0);
 }
+
