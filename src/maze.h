@@ -31,11 +31,11 @@ class Maze{
 
     struct cellInfo getCellFromWorldPos(float x, float y) const;
 
-    struct cellInfo getCellFromWorldPos(struct playerInfo pi) const;
+    struct cellInfo getCellFromWorldPos(const struct playerInfo &pi) const;
 
     struct playerInfo toWorldSpace(float x, float y, float rx=0, float ry=0) const;
 
-    struct playerInfo toWorldSpace(struct cellInfo ci) const;
+    struct playerInfo toWorldSpace(const struct cellInfo &ci) const;
 
     int** getLayout() const;
 

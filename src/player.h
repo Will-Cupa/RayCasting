@@ -4,6 +4,7 @@
 #include <SDL2/SDL.h>
 #include <cmath>
 #include "maze.h"
+#include "vector.h"
 
 #define PI 3.141592653589793238463
 
