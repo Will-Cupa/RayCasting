@@ -12,11 +12,11 @@ Player::Player(float x, float y, int speed, float viewPlaneSize){
 }
 
 float Player::getX() const{
-    return x;
+    return pos.x;
 }
 
 float Player::getY() const{
-    return y;
+    return pos.y;
 }
 
 double Player::getAngle() const{
@@ -24,40 +24,39 @@ double Player::getAngle() const{
 }
 
 void Player::setX(float x){
-    (*this).x = x;
+    pos.x = x;
 }
 
 void Player::setY(float y){
-    (*this).y = y;
+    pos.y = y;
 }
 
 void Player::setPos(float x, float y){
-    (*this).x = x;
-    (*this).y = y;
+    pos.x = x;
+    pos.y = y;
 }
 
 void Player::addMovement(int input){
-    (*this).x += dx * input * speed;
-    (*this).y += dy * input * speed;
+    pos += dir * input * speed;
 }
 
 void Player::rotate(double direction){
     angle += degToRad(direction);
-    dx = sin(angle);
-    dy = -cos(angle);
+    dir.x = sin(angle);
+    dir.y = -cos(angle);
 
-    px = sin(angle + degToRad(90));
-    py = -cos(angle + degToRad(90));
+    plane.x = sin(angle + degToRad(90));
+    plane.y = -cos(angle + degToRad(90));
 }
 
 float Player::castRay(int screenWidth, int offset, const Maze& maze) {
     float rayOffset = offset * (viewSize/screenWidth);
 
-    struct cellInfo cell = maze.getCellFromWorldPos(x + px*rayOffset, y + py*rayOffset);
+    struct cellInfo cell = maze.getCellFromWorldPos(pos + plane*rayOffset);
 
-
-    float sx = sqrt(1+(dy/dx)*(dy/dx));
-    float sy = sqrt(1+(dx/dy)*(dx/dy));
+    //length increment
+    float sx = sqrt(1+(dir.y/dir.x)*(dir.y/dir.x));
+    float sy = sqrt(1+(dir.x/dir.y)*(dir.x/dir.y));
 
     int step_x, step_y;
 
@@ -95,28 +94,27 @@ float Player::castRay(int screenWidth, int offset, const Maze& maze) {
         }
     }
 
-    float collision_x = (cell.x + cell.rx) + dx * storedLength;
-    float collision_y = (cell.y + cell.ry) + dy * storedLength;
+    float collision_x = (cell.x + cell.rx) + dir.x * storedLength;
+    float collision_y = (cell.y + cell.ry) + dir.y * storedLength;
 
     struct playerInfo pl = maze.toWorldSpace(collision_x, collision_y);
 
-    x1 = x + px*rayOffset;
-    y1 = y + py*rayOffset;
+    x1 = pos.x + plane.x*rayOffset;
+    y1 = pos.y + plane.y*rayOffset;
 
     x2 = pl.x;
     y2 = pl.y;
 
-    float rayDirX = dx + px * offset;
-    float rayDirY = dy + py * offset;
+    Vector rayDir = dir + plane * offset;
 
     return storedLength;
 }
 
 void Player::draw(SDL_Renderer *renderer, int size) const {
-    SDL_Rect rectangle = {(int)(x - size/2), (int)(y - size/2), size, size};
-    SDL_RenderDrawLine(renderer, x, y, x + (dx*speed*5), y + (dy*speed*5));
-    SDL_RenderDrawLine(renderer, x , y , x + px*(viewSize/2),  y + py*(viewSize/2));
-    SDL_RenderDrawLine(renderer, x, y, x - px*(viewSize/2),  y - py*(viewSize/2));
+    SDL_Rect rectangle = {pos.x - size/2, pos.y - size/2, size, size};
+    SDL_RenderDrawLine(renderer, pos.x, pos.y, pos.x + (dir.x*speed*5), pos.y + (dir.y*speed*5));
+    SDL_RenderDrawLine(renderer, pos.x , pos.y , pos.x + plane.x*(viewSize/2),  pos.y + plane.y*(viewSize/2));
+    SDL_RenderDrawLine(renderer, pos.x, pos.y, pos.x - plane.x*(viewSize/2),  pos.y - plane.y*(viewSize/2));
 
     SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
 

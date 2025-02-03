@@ -11,6 +11,8 @@ class Vector{
 
     void display() const;
 
+    void normalize();
+
     // Operators
 
     Vector operator+(const Vector &v2) const;

@@ -11,9 +11,9 @@
 class Player{
     private:
     float x1, x2, y1, y2; //debug variable
-    float x, y; //player position
-    float dx, dy; //direction vector (normalized)
-    float px, py; //right vector/view plane vector (normalized)
+    Vector position; //player position
+    Vector dir; //direction vector (normalized)
+    Vector plane; //right vector/view plane vector (normalized)
     int speed;
     float viewSize;
     double angle;

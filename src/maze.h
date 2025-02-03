@@ -5,6 +5,7 @@
 #include <fstream>
 #include <iostream>
 #include <cmath>
+#include "vector.h"
 
 using namespace std;
 
@@ -13,13 +14,13 @@ const int WALL = 1, SPAWN_POINT = 2;
 
 class Maze{
     private :
-    float x, y;
+    Vector pos;
     int wallSize, width, height;
     int **layout;
 
     public :
 
-    Maze(ifstream &file, int wallSize, int pos_x, int pos_y);
+    Maze(ifstream &file, int wallSize, float pos_x, float pos_y);
 
     void makeLayout(ifstream  &file);
 
@@ -54,6 +55,6 @@ class Maze{
 
 struct cellInfo{int x, y; float rx, ry;};
 
-struct playerInfo{float x, y;};
+struct playerInfo{Vector playerPos;};
 
 #endif

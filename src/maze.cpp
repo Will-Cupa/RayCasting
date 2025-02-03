@@ -43,20 +43,19 @@ void Maze::makeLayout(ifstream &file){
 }
 
 
-Maze::Maze(ifstream &file, int wallSize, int pos_x, int pos_y){
+Maze::Maze(ifstream &file, int wallSize, float pos_x, float pos_y){
     initializedDimension(file);
     makeLayout(file);
 
     (*this).wallSize = wallSize;
     
     //center the drawing on the coordinates
-    x = pos_x - (width*wallSize)/2;
-    y = pos_y - (height*wallSize)/2;
+    pos = Vector(pos_x - (width*wallSize)/2, pos_y - (height*wallSize)/2);
 }
 
 void Maze::draw(SDL_Renderer *renderer) const{
-    int xDraw = x;
-    int yDraw = y;
+    int xDraw = pos.x;
+    int yDraw = pos.y;
 
     //Going across the string and draw a square for each 'W'
     for(int i = 0; i < height; i++){
@@ -68,7 +67,7 @@ void Maze::draw(SDL_Renderer *renderer) const{
             xDraw += wallSize;
         } 
         yDraw += wallSize;
-        xDraw = x;  
+        xDraw = pos.x;  
     }
 }
 
@@ -103,27 +102,25 @@ int** Maze::getLayout() const{
 }
 
 int Maze::getX() const{
-    return (*this).x;
+    return pos.x;
 }
 
 int Maze::getY() const{
-    return (*this).y;
+    return pos.y;
 }
 
-struct cellInfo Maze::getCellFromWorldPos(float x, float y) const{
-    float px = x - (*this).x;
-    float py = y - (*this).y;
+struct cellInfo Maze::getCellFromWorldPos(Vector playerPos) const{
+    playerPos -= (*this).pos; //implicit copy of the vector
 
-    float rx = px/(float)wallSize;
-    float ry = py/(float)wallSize;
+    Vector relativePos = playerPos/(float)wallSize;
 
-    int cell_x = trunc(rx);
-    int cell_y = trunc(ry);
+    int cell_x = trunc(relativePos.x);
+    int cell_y = trunc(relativePos.y);
 
-    rx -= cell_x;
-    ry -= cell_y;
+    relativePos.x -= cell_x;
+    relativePos.y -= cell_y;
 
-    return cellInfo{cell_x, cell_y, rx, ry};
+    return cellInfo{cell_x, cell_y, relativePos.x, relativePos.y};
 }
 
 struct cellInfo Maze::getCellFromWorldPos(const struct playerInfo &player) const{

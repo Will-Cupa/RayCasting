@@ -61,6 +61,15 @@ void Vector::operator/=(float val){
     y /= val;
 }
 
+void Vector::normalize(){
+    y /=x;
+    x = 1;
+}
+
 void Vector::display() const{
     cout << x << " " << y << endl;
+}
+
+float dotProduct(const Vector &v1, const Vector &v2){
+    return v1.x*v2.x + v1.y * v2.y;
 }
