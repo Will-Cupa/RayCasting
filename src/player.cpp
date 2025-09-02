@@ -3,8 +3,7 @@
 using namespace std;
 
 Player::Player(float x, float y, int speed, float viewPlaneSize){
-    (*this).x = x;
-    (*this).y = y;
+    (*this).pos = Vector(x, y);
     (*this).speed = speed;
     (*this).viewSize = viewPlaneSize;
 
@@ -66,7 +65,7 @@ float Player::castRay(int screenWidth, int offset, const Maze& maze) {
     float length_x, length_y, storedLength;
 
 
-    if(dx < 0){
+    if(dir.x < 0){
         step_x = -1;
         length_x = sx * cell.rx;
     }else{
@@ -74,7 +73,7 @@ float Player::castRay(int screenWidth, int offset, const Maze& maze) {
         length_x = sx * (1 - cell.rx);
     }
 
-    if(dy < 0){
+    if(dir.y < 0){
         step_y = -1;
         length_y = sy * cell.ry;
     }else{
@@ -97,7 +96,7 @@ float Player::castRay(int screenWidth, int offset, const Maze& maze) {
     float collision_x = (cell.x + cell.rx) + dir.x * storedLength;
     float collision_y = (cell.y + cell.ry) + dir.y * storedLength;
 
-    struct playerInfo pl = maze.toWorldSpace(collision_x, collision_y);
+    Vector pl = maze.toWorldSpace(collision_x, collision_y);
 
     x1 = pos.x + plane.x*rayOffset;
     y1 = pos.y + plane.y*rayOffset;

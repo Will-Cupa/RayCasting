@@ -28,15 +28,15 @@ class Maze{
 
     void draw(SDL_Renderer *renderer) const;
 
-    struct playerInfo getPlayerSpawnPoint() const;
+    Vector getPlayerSpawnPoint() const;
 
     struct cellInfo getCellFromWorldPos(float x, float y) const;
 
-    struct cellInfo getCellFromWorldPos(const struct playerInfo &pi) const;
+    struct cellInfo getCellFromWorldPos(Vector playerPos) const;
 
-    struct playerInfo toWorldSpace(float x, float y, float rx=0, float ry=0) const;
+    Vector toWorldSpace(float x, float y, float rx=0, float ry=0) const;
 
-    struct playerInfo toWorldSpace(const struct cellInfo &ci) const;
+    Vector toWorldSpace(const struct cellInfo &ci) const;
 
     int** getLayout() const;
 
@@ -55,6 +55,5 @@ class Maze{
 
 struct cellInfo{int x, y; float rx, ry;};
 
-struct playerInfo{Vector playerPos;};
 
 #endif

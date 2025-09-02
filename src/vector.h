@@ -9,6 +9,8 @@ class Vector{
 
     Vector(float x, float y);
 
+    Vector();
+
     void display() const;
 
     void normalize();

@@ -2,6 +2,11 @@
 
 using namespace std;
 
+Vector::Vector(){
+    (*this).x = 0;
+    (*this).y = 0;
+}
+
 Vector::Vector(float x, float y){
     (*this).x = x;
     (*this).y = y;

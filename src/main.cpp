@@ -51,9 +51,9 @@ int main(int argc, char *argv[]){
 
     Maze maze(mazeFile, 40, WIDTH/2, HEIGHT/2);
 
-    struct playerInfo spawnCoord = maze.getPlayerSpawnPoint();
+    Vector spawnCoord = maze.getPlayerSpawnPoint();
 
-    Player player(spawnCoord.x, spawnCoord.y, PLAYER_SPEED, 5);
+    Player player(spawnCoord.x, spawnCoord.y, PLAYER_SPEED, 10);
 
     while(running){
         
