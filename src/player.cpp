@@ -93,17 +93,7 @@ float Player::castRay(int screenWidth, int offset, const Maze& maze) {
         }
     }
 
-    Vector collisionPos = (cell.pos + cell.relativePos) + dir * storedLength;
-
-    Vector pl = maze.toWorldSpace(collisionPos);
-
-    x1 = pos.x + plane.x*rayOffset;
-    y1 = pos.y + plane.y*rayOffset;
-
-    x2 = pl.x;
-    y2 = pl.y;
-
-    Vector rayDir = dir + plane * offset;
+    // Vector collisionPos = (cell.pos + cell.relativePos) + dir * storedLength;
 
     return storedLength;
 }
@@ -114,7 +104,7 @@ void Player::draw(SDL_Renderer *renderer, int size) const {
     SDL_RenderDrawLine(renderer, pos.x , pos.y , pos.x + plane.x*(viewSize/2),  pos.y + plane.y*(viewSize/2));
     SDL_RenderDrawLine(renderer, pos.x, pos.y, pos.x - plane.x*(viewSize/2),  pos.y - plane.y*(viewSize/2));
 
-    SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
+    // SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
 
     SDL_RenderFillRect(renderer, &rectangle);
 }

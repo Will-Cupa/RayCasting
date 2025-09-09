@@ -103,6 +103,7 @@ int main(int argc, char *argv[]){
         // maze.draw(renderer);
 
         for(int i = 0; i < WIDTH; i++){
+            // i - (WIDTH/2) -> center view around player
             float size = 100/player.castRay(WIDTH, i - (WIDTH/2), maze);
             SDL_SetRenderDrawColor(renderer, 255,0,0,255);
             SDL_RenderDrawLine(renderer, i, HEIGHT/2 - size/2, i, HEIGHT/2 + size/2);

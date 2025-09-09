@@ -43,7 +43,7 @@ class Vector{
     void operator/=(float val);
 };
 
-Vector truncVec(const Vector &v);
+Vector trunc(const Vector &v);
 
 float dotProduct(const Vector &v1, const Vector &v2);
 
