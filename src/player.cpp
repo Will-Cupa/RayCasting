@@ -93,7 +93,7 @@ float Player::castRay(int screenWidth, int offset, const Maze& maze) {
         }
     }
 
-    // Vector collisionPos = (cell.pos + cell.relativePos) + dir * storedLength;
+    //Vector collisionPos = (cell.pos + cell.relativePos) + dir * storedLength;
 
     return storedLength;
 }
