@@ -59,26 +59,26 @@ float Player::castRay(int screenWidth, int offset, const Maze& maze) {
 
     int step_x, step_y;
 
-    int check_x = cell.x;
-    int check_y = cell.y;
+    int check_x = cell.pos.x;
+    int check_y = cell.pos.y;
 
     float length_x, length_y, storedLength;
 
 
     if(dir.x < 0){
         step_x = -1;
-        length_x = sx * cell.rx;
+        length_x = sx * cell.relativePos.x;
     }else{
         step_x = 1;
-        length_x = sx * (1 - cell.rx);
+        length_x = sx * (1 - cell.relativePos.x);
     }
 
     if(dir.y < 0){
         step_y = -1;
-        length_y = sy * cell.ry;
+        length_y = sy * cell.relativePos.y;
     }else{
         step_y = 1;
-        length_y = sy * (1 - cell.ry);
+        length_y = sy * (1 - cell.relativePos.y);
     }
 
     while(maze.inLayout(check_x, check_y) && !maze.isColliding(check_x, check_y)){
@@ -93,10 +93,9 @@ float Player::castRay(int screenWidth, int offset, const Maze& maze) {
         }
     }
 
-    float collision_x = (cell.x + cell.rx) + dir.x * storedLength;
-    float collision_y = (cell.y + cell.ry) + dir.y * storedLength;
+    Vector collisionPos = (cell.pos + cell.relativePos) + dir * storedLength;
 
-    Vector pl = maze.toWorldSpace(collision_x, collision_y);
+    Vector pl = maze.toWorldSpace(collisionPos);
 
     x1 = pos.x + plane.x*rayOffset;
     y1 = pos.y + plane.y*rayOffset;

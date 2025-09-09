@@ -71,29 +71,25 @@ void Maze::draw(SDL_Renderer *renderer) const{
     }
 }
 
-struct Vector Maze::getPlayerSpawnPoint() const {
+Vector Maze::getPlayerSpawnPoint() const {
     //Player cell
-    int cell_x = -1;
-    int cell_y = -1;
-    
-    //Center player in cell
-    float rx = 0.5f;
-    float ry = 0.5f;
+    Vector playerCell = Vector(-1,-1);
 
     for(int i = 0; i < height; i++){
         for(int j = 0; j < width; j++){
             if(layout[i][j] == SPAWN_POINT){
-                cell_x = j;
-                cell_y = i;
+                playerCell.x = j;
+                playerCell.y = i;
             } 
         }
     }
 
-    if(cell_x == -1 || cell_y == -1){
+    if(playerCell.x == -1 || playerCell.y == -1){
         throw new logic_error("Aucun point d'apparition");
     }
 
-    return toWorldSpace(cell_x, cell_y, rx, ry);
+    // (0.5,0.5) -> Center player in cell
+    return toWorldSpace(playerCell, Vector(0.5f, 0.5f));
 
 }
 
@@ -114,26 +110,23 @@ struct cellInfo Maze::getCellFromWorldPos(Vector playerPos) const{
 
     Vector relativePos = playerPos/(float)wallSize;
 
-    int cell_x = trunc(relativePos.x);
-    int cell_y = trunc(relativePos.y);
+    Vector cell = trunc(relativePos);
 
-    relativePos.x -= cell_x;
-    relativePos.y -= cell_y;
+    relativePos -= cell;
 
-    return cellInfo{cell_x, cell_y, relativePos.x, relativePos.y};
+    return cellInfo{cell, relativePos};
 }
 
-struct Vector Maze::toWorldSpace(const struct cellInfo &cell) const{
+Vector Maze::toWorldSpace(const struct cellInfo &cell) const{
     //On ajoute la position de la case et la position dans la case
     //On les multiplie par la taille de la case
     //On retire la position du labyrinthe
-    float px = (cell.x+cell.rx)*wallSize + pos.x;
-    float py = (cell.y+cell.ry)*wallSize + pos.y;
+    Vector worldPos = (cell.pos+cell.relativePos)*wallSize + pos;
 
-    return Vector(px, py);
+    return worldPos;
 }
 
-struct Vector Maze::toWorldSpace(float x, float y, float rx, float ry) const{
+Vector Maze::toWorldSpace(float x, float y, float rx, float ry) const{
     //On ajoute la position de la case et la position dans la case
     //On les multiplie par la taille de la case
     //On retire la position du labyrinthe
@@ -141,6 +134,14 @@ struct Vector Maze::toWorldSpace(float x, float y, float rx, float ry) const{
     float py = (y+ry)*wallSize + pos.y;
 
     return Vector(px, py);
+}
+
+Vector Maze::toWorldSpace(const Vector &cell, const Vector &relativePos) const{
+    //On ajoute la position de la case et la position dans la case
+    //On les multiplie par la taille de la case
+    //On retire la position du labyrinthe
+
+    return (cell + relativePos)*wallSize + pos;
 }
 
 bool Maze::isColliding(int cell_x, int cell_y) const{

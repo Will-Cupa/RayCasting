@@ -2,6 +2,7 @@
 #define _VECTOR_H_
 
 #include <iostream>
+#include <cmath>
 
 class Vector{
     public:
@@ -42,7 +43,7 @@ class Vector{
     void operator/=(float val);
 };
 
-
+Vector truncVec(const Vector &v);
 
 float dotProduct(const Vector &v1, const Vector &v2);
 

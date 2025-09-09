@@ -78,3 +78,9 @@ void Vector::display() const{
 float dotProduct(const Vector &v1, const Vector &v2){
     return v1.x*v2.x + v1.y * v2.y;
 }
+
+Vector trunc(const Vector &v){
+    float x = trunc(v.x);
+    float y = trunc(v.y);
+    return Vector(x,y);
+}

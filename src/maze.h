@@ -38,6 +38,8 @@ class Maze{
 
     Vector toWorldSpace(const struct cellInfo &ci) const;
 
+    Vector toWorldSpace(const Vector &cell, const Vector &relativePos) const;
+
     int** getLayout() const;
 
     int getX() const;
@@ -53,7 +55,7 @@ class Maze{
     void destroy();
 };
 
-struct cellInfo{int x, y; float rx, ry;};
+struct cellInfo{Vector pos;  Vector relativePos;};
 
 
 #endif
