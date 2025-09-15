@@ -7,7 +7,7 @@
 using namespace std;
 
 const int PLAYER_SPEED = 5;
-const int HEIGHT = 600, WIDTH = 800;
+const int HEIGHT = 300, WIDTH = 400;
 
 int main(int argc, char *argv[]){
     int init = SDL_Init(SDL_INIT_EVERYTHING);
@@ -104,7 +104,7 @@ int main(int argc, char *argv[]){
 
         for(int i = 0; i < WIDTH; i++){
             // i - (WIDTH/2) -> center view around player
-            float size = 100/player.castRay(WIDTH, i - (WIDTH/2), maze);
+            float size = 200/player.castRay(WIDTH, i - (WIDTH/2), maze);
             SDL_SetRenderDrawColor(renderer, 255,0,0,255);
             SDL_RenderDrawLine(renderer, i, HEIGHT/2 - size/2, i, HEIGHT/2 + size/2);
         }
