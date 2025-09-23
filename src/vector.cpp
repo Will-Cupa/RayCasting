@@ -66,6 +66,12 @@ void Vector::operator/=(float val){
     y /= val;
 }
 
+ostream& operator<<(ostream& os, const Vector& v){
+    os << v.x << "," << v.y << endl;
+
+    return os;
+}
+
 void Vector::normalize(){
     y /=x;
     x = 1;

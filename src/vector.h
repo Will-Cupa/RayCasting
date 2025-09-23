@@ -4,6 +4,8 @@
 #include <iostream>
 #include <cmath>
 
+using namespace std;
+
 class Vector{
     public:
     float x,y;
@@ -44,6 +46,8 @@ class Vector{
 };
 
 Vector trunc(const Vector &v);
+
+std::ostream& operator<<(ostream& os, const Vector& v);
 
 float dotProduct(const Vector &v1, const Vector &v2);
 

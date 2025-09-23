@@ -7,7 +7,7 @@
 using namespace std;
 
 const int PLAYER_SPEED = 5;
-const int HEIGHT = 300, WIDTH = 400;
+const int HEIGHT = 600, WIDTH = 800;
 
 int main(int argc, char *argv[]){
     int init = SDL_Init(SDL_INIT_EVERYTHING);
@@ -53,7 +53,7 @@ int main(int argc, char *argv[]){
 
     Vector spawnCoord = maze.getPlayerSpawnPoint();
 
-    Player player(spawnCoord.x, spawnCoord.y, PLAYER_SPEED, 10);
+    Player player(spawnCoord.x, spawnCoord.y, PLAYER_SPEED, 20);
 
     while(running){
         
@@ -104,8 +104,12 @@ int main(int argc, char *argv[]){
 
         for(int i = 0; i < WIDTH; i++){
             // i - (WIDTH/2) -> center view around player
+            cout << player.castRay(WIDTH, i - (WIDTH/2), maze) << endl;
+
+            // invert (distance to size) and scale
             float size = 200/player.castRay(WIDTH, i - (WIDTH/2), maze);
             SDL_SetRenderDrawColor(renderer, 255,0,0,255);
+            
             SDL_RenderDrawLine(renderer, i, HEIGHT/2 - size/2, i, HEIGHT/2 + size/2);
         }
         
@@ -129,7 +133,3 @@ int main(int argc, char *argv[]){
     return 0;
 }
 
-//to compile
-// g++ src/*.cpp -ID:\C++Libraries\SDL2\include -LD:\C++Libraries\SDL2\lib -lmingw32 -lSDL2main -lSDL2 -o bin/main
-
-//g++ src/*.cpp -IZ:\personal\SDL2Library\include -LZ:\personal\SDL2Library\lib -lmingw32 -lSDL2main -lSDL2 -o bin/main

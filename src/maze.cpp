@@ -1,5 +1,7 @@
 #include "maze.h"
 
+using namespace std;
+
 void Maze::initializedDimension(ifstream &file){
     height = 0;
     width = 0;

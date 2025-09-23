@@ -1,4 +1,5 @@
 #include "player.h"
+#include <iostream>
 
 using namespace std;
 
@@ -94,7 +95,7 @@ float Player::castRay(int screenWidth, int offset, const Maze& maze) {
     }
 
     //Vector collisionPos = (cell.pos + cell.relativePos) + dir * storedLength;
-
+    
     return storedLength;
 }
 
