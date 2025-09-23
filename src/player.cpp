@@ -100,8 +100,8 @@ float Player::castRay(int screenWidth, int offset, const Maze& maze) {
     }
 
     //Vector collisionPos = (cell.pos + cell.relativePos) + dir * storedLength;
-    
-    return storedLength;
+
+    return storedLength * cos(rayAngle - angle);
 }
 
 void Player::draw(SDL_Renderer *renderer, int size) const {
