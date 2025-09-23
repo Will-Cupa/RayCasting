@@ -51,11 +51,11 @@ void Player::rotate(double direction){
 
 float Player::castRay(int screenWidth, int offset, const Maze& maze) {
     float FOV = 90;
-    float rayAngle = offset * (FOV/screenWidth);
+    float rayAngle = degToRad(offset * (FOV/screenWidth));
     Vector rayDir = Vector();
 
-    rayDir.x = sin(angle + degToRad(rayAngle));
-    rayDir.y = -cos(angle + degToRad(rayAngle));
+    rayDir.x = sin(angle + rayAngle);
+    rayDir.y = -cos(angle + rayAngle);
 
     struct cellInfo cell = maze.getCellFromWorldPos(pos);
 
@@ -101,7 +101,7 @@ float Player::castRay(int screenWidth, int offset, const Maze& maze) {
 
     //Vector collisionPos = (cell.pos + cell.relativePos) + dir * storedLength;
 
-    return storedLength * cos(rayAngle - angle);
+    return storedLength;
 }
 
 void Player::draw(SDL_Renderer *renderer, int size) const {
