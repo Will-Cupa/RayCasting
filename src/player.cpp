@@ -50,13 +50,18 @@ void Player::rotate(double direction){
 }
 
 float Player::castRay(int screenWidth, int offset, const Maze& maze) {
-    float rayOffset = offset * (viewSize/screenWidth);
+    float FOV = 90;
+    float rayAngle = offset * (FOV/screenWidth);
+    Vector rayDir = Vector();
 
-    struct cellInfo cell = maze.getCellFromWorldPos(pos + plane*rayOffset);
+    rayDir.x = sin(angle + degToRad(rayAngle));
+    rayDir.y = -cos(angle + degToRad(rayAngle));
+
+    struct cellInfo cell = maze.getCellFromWorldPos(pos);
 
     //length increment
-    float sx = sqrt(1+(dir.y/dir.x)*(dir.y/dir.x));
-    float sy = sqrt(1+(dir.x/dir.y)*(dir.x/dir.y));
+    float sx = sqrt(1+(rayDir.y/rayDir.x)*(rayDir.y/rayDir.x));
+    float sy = sqrt(1+(rayDir.x/rayDir.y)*(rayDir.x/rayDir.y));
 
     int step_x, step_y;
 
@@ -66,7 +71,7 @@ float Player::castRay(int screenWidth, int offset, const Maze& maze) {
     float length_x, length_y, storedLength;
 
 
-    if(dir.x < 0){
+    if(rayDir.x < 0){
         step_x = -1;
         length_x = sx * cell.relativePos.x;
     }else{
@@ -74,7 +79,7 @@ float Player::castRay(int screenWidth, int offset, const Maze& maze) {
         length_x = sx * (1 - cell.relativePos.x);
     }
 
-    if(dir.y < 0){
+    if(rayDir.y < 0){
         step_y = -1;
         length_y = sy * cell.relativePos.y;
     }else{
